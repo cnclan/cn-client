@@ -40,6 +40,8 @@
   bottom: 28px;
   width: 46px;
   height: 78px;
+  transform-origin: bottom right;
+  transform: scale(var(--cn-term-scale, 1));
   z-index: var(--cn-z);
   cursor: pointer;
   user-select: none;
@@ -48,8 +50,13 @@
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 .cn-term-walkie.dragging { cursor: grabbing; transition: none; }
-.cn-term-walkie.docked-left { transform: translateX(-50%); opacity: 0.35; }
-.cn-term-walkie.docked-right { transform: translateX(50%); opacity: 0.35; }
+.cn-term-walkie.docked-left { transform: translateX(-50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
+.cn-term-walkie.docked-right { transform: translateX(50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
+/* 触屏：dock 挂边必须更醒目 + 点按唤醒（没有 hover），默认尺寸更大避免误触 */
+@media (hover: none) {
+  .cn-term-walkie.docked-left, .cn-term-walkie.docked-right { opacity: 0.55; }
+  .cn-term-walkie { width: 54px; height: 92px; }
+}
 .cn-term-walkie.hidden, .cn-term-panel.hidden, .cn-term-badge.hidden,
 .cn-term-tb.hidden, .cn-term-rooms.hidden, .cn-term-tools.hidden,
 .cn-term-roommeta.hidden { display: none; }
