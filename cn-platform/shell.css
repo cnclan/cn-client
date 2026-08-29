@@ -56,6 +56,11 @@
 @media (hover: none) {
   .cn-term-walkie.docked-left, .cn-term-walkie.docked-right { opacity: 0.55; }
   .cn-term-walkie { width: 54px; height: 92px; }
+  /* 触屏：组队按钮 ≥44px 触控目标 */
+  .cn-term-team-join, .cn-term-team-copy, .cn-term-recent-chip, .cn-term-sec-add { min-height: 44px; font-size: 12px; }
+  .cn-term-team { padding: 8px 10px; }
+  .cn-term-team-count { height: 34px; }
+  .cn-term-quickteam button { min-height: 44px; }
 }
 .cn-term-walkie.hidden, .cn-term-panel.hidden, .cn-term-badge.hidden,
 .cn-term-tb.hidden, .cn-term-rooms.hidden, .cn-term-tools.hidden,
@@ -337,7 +342,193 @@
   color: #08120c;
   border-color: var(--cn-green);
 }
-#cn-term-new { flex: none; width: 30px; font-size: 14px; line-height: 1; }
+/* 组队广场：一键开队大按钮 + 快速开队表单 */
+.cn-term-cta {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--cn-border-soft);
+}
+.cn-term-cta.hidden { display: none; }
+.cn-term-open-team {
+  height: 44px;
+  border: 1px solid var(--cn-green);
+  background: var(--cn-green);
+  color: #08120c;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  cursor: pointer;
+  font-family: var(--cn-font);
+}
+.cn-term-open-team:hover { background: #7fe6b0; border-color: #7fe6b0; }
+.cn-term-quickteam { display: flex; gap: 6px; }
+.cn-term-quickteam.hidden { display: none; }
+.cn-term-quickteam input {
+  flex: 1;
+  min-width: 0;
+  background: #0a0f0d;
+  border: 1px solid var(--cn-border);
+  color: var(--cn-text);
+  padding: 6px 8px;
+  font-size: 12px;
+  font-family: var(--cn-font);
+  outline: none;
+}
+.cn-term-quickteam input:focus { border-color: var(--cn-green); }
+.cn-term-quickteam button {
+  flex: none;
+  border: 1px solid var(--cn-border);
+  background: #131a16;
+  color: var(--cn-green);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-family: var(--cn-font);
+}
+.cn-term-quickteam button:hover { background: var(--cn-green); color: #08120c; border-color: var(--cn-green); }
+
+/* 组队广场：分组区块 */
+.cn-term-sec { border-bottom: 1px solid var(--cn-border-soft); }
+.cn-term-sec:last-child { border-bottom: none; }
+.cn-term-sec-h {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 4px;
+  font-size: 11px;
+  color: var(--cn-muted);
+  letter-spacing: 2px;
+  background: #101513;
+}
+.cn-term-sec-t { flex: 1; }
+.cn-term-sec-count {
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  background: #1d2b24;
+  border: 1px solid var(--cn-border);
+  color: var(--cn-green);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cn-term-sec-add {
+  border: 1px solid var(--cn-border);
+  background: transparent;
+  color: var(--cn-muted);
+  font-size: 12px;
+  line-height: 1;
+  width: 24px;
+  height: 20px;
+  cursor: pointer;
+  font-family: var(--cn-font);
+  flex: none;
+}
+.cn-term-sec-add:hover { background: var(--cn-green); color: #08120c; border-color: var(--cn-green); }
+
+/* 招募中的队伍行 */
+.cn-term-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: none;
+  border-bottom: 1px solid var(--cn-border-soft);
+  background: transparent;
+  font-family: var(--cn-font);
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+}
+.cn-term-team:last-child { border-bottom: none; }
+.cn-term-team:hover { background: #141b17; }
+.cn-term-team.active { background: #131a16; box-shadow: inset 2px 0 0 var(--cn-green); }
+.cn-term-team-count {
+  width: 34px;
+  height: 28px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1d2b24;
+  border: 1px solid var(--cn-border);
+  color: var(--cn-green);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+}
+.cn-term-team-count-l { font-size: 8px; color: var(--cn-faint); font-weight: normal; margin-top: 1px; }
+.cn-term-team.active .cn-term-team-count { background: var(--cn-green); color: #08120c; border-color: var(--cn-green); }
+.cn-term-team.active .cn-term-team-count-l { color: #08120c; }
+.cn-term-team-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cn-term-team-name {
+  font-size: 12px;
+  color: var(--cn-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+.cn-term-team-sep { color: var(--cn-faint); flex: none; }
+.cn-term-team-recruiting {
+  flex: none;
+  font-size: 9px;
+  color: var(--cn-green);
+  border: 1px solid rgba(157, 255, 200, 0.45);
+  padding: 0 3px;
+  line-height: 13px;
+  animation: cn-team-pulse 2s ease-in-out infinite;
+}
+@keyframes cn-team-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+.cn-term-team-sub { font-size: 10px; color: var(--cn-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cn-term-team-right { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.cn-term-team-actions { flex: none; display: flex; gap: 4px; }
+.cn-term-team-join, .cn-term-team-copy {
+  border: 1px solid var(--cn-border);
+  background: #131a16;
+  color: var(--cn-green);
+  font-size: 11px;
+  padding: 4px 8px;
+  min-height: 26px;
+  cursor: pointer;
+  font-family: var(--cn-font);
+  flex: none;
+}
+.cn-term-team-join:hover, .cn-term-team-copy:hover { background: var(--cn-green); color: #08120c; border-color: var(--cn-green); }
+.cn-term-team-copy { color: var(--cn-muted); }
+
+/* 最近开过的队（复用：一键再进） */
+.cn-term-recents {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 10px 6px;
+  font-size: 10px;
+  color: var(--cn-faint);
+}
+.cn-term-recent-chip {
+  border: 1px solid var(--cn-border);
+  background: transparent;
+  color: var(--cn-muted);
+  font-size: 10px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-family: var(--cn-font);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cn-term-recent-chip:hover { background: var(--cn-green); color: #08120c; border-color: var(--cn-green); }
 
 .cn-term-menu {
   position: absolute;
