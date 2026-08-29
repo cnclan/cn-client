@@ -447,6 +447,8 @@
 .cn-term-team:last-child { border-bottom: none; }
 .cn-term-team:hover { background: #141b17; }
 .cn-term-team.active { background: #131a16; box-shadow: inset 2px 0 0 var(--cn-green); }
+.cn-term-team.mine { background: #101713; }
+.cn-term-team.mine .cn-term-team-count { border-color: var(--cn-green); }
 .cn-term-team-count {
   width: 34px;
   height: 28px;
