@@ -120,12 +120,27 @@
       var items = (data && data.items) || [];
       state.next = data.next || null;
       state.total += items.length;
-      if (!items.length) state.done = true;
+      // next 为空 = 没有更多（避免滚动哨兵反复请求同一页）
+      if (!state.next) state.done = true;
       renderItems(items);
       if (state.done && !listEl.children.length) showEmpty(!!(state.q || state.mode || state.map));
       updateCount();
     } catch (e) {
-      showError(e.message || String(e));
+      state.done = true;
+      if (listEl.children.length) {
+        // 分页失败：追加行内重试，不清空已渲染内容
+        var retry = document.createElement("div");
+        retry.className = "cn-end";
+        retry.innerHTML = '<span>加载失败</span> <button type="button" class="chip" id="cn-pg-retry">重试</button>';
+        listEl.appendChild(retry);
+        document.getElementById("cn-pg-retry").onclick = function () {
+          retry.remove();
+          state.done = false;
+          load();
+        };
+      } else {
+        showError(e.message || String(e));
+      }
     } finally {
       state.loading = false;
       hideLoading();
