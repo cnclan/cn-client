@@ -904,6 +904,16 @@
 
 .cn-term-admin { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
 .cn-term-admin form { display: flex; flex-direction: column; gap: 6px; }
+.cn-term-invite-section { display:flex; flex-direction:column; gap:8px; }
+.cn-term-invite-head { align-items:center; justify-content:space-between; color:var(--cn-green); }
+.cn-term-invite-section button { border:1px solid var(--cn-border); background:var(--cn-panel-2); color:var(--cn-accent); padding:6px 10px; font:12px var(--cn-font); cursor:pointer; }
+.cn-term-invite-section #cn-term-invite-create { background:var(--cn-accent); color:var(--cn-ok-fg); }
+.cn-term-invite-section .cn-term-invite-delete { color:var(--cn-danger); }
+.cn-term-invite-status { color:var(--cn-text); font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+.cn-term-invite-status:empty { display:none; }
+#cn-term-invites-list { display:flex; flex-direction:column; gap:6px; }
+.cn-term-admin-fold { border-top:1px solid var(--cn-border-soft); padding-top:8px; }
+.cn-term-admin-fold summary { color:var(--cn-muted); font-size:12px; cursor:pointer; margin-bottom:8px; }
 .cn-term-rowline { display: flex; gap: 6px; }
 .cn-term-admin input, .cn-term-admin textarea, .cn-term-admin select, .cn-term-sub input {
   flex: 1;
