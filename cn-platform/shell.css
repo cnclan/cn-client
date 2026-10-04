@@ -159,6 +159,7 @@
   border-radius: 14px 14px 10px 10px;
 }
 .cn-term-screen {
+  pointer-events:auto;
   position: absolute;
   left: 7px;
   right: 7px;
@@ -192,6 +193,17 @@
   background: #3a4550;
   border-radius: 2px 0 0 2px;
 }
+
+/* Stop stays inside the walkie body, never over the mobile game controls. */
+.cn-term-speed-quick { position:absolute; bottom:3px; left:2px; right:2px; }
+.cn-term-speed-quick button.cn-speed-compact { width:100%; height:36px; padding:0; border:1px solid var(--cn-accent); background:var(--cn-panel); color:var(--cn-accent); font:11px var(--cn-font); cursor:pointer; touch-action:manipulation; }
+.cn-term-online-hint { color:var(--cn-muted); font-size:11px; margin:8px 0; }
+.cn-term-online-user { display:flex; align-items:center; gap:6px; width:100%; text-align:left; padding:10px 8px; border:0; border-bottom:1px solid var(--cn-border-soft); background:var(--cn-panel-2); color:var(--cn-text); cursor:pointer; }
+.cn-term-online-user span:nth-child(2) { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cn-term-online-user small { color:var(--cn-muted); }
+#cn-term-diagnostics { box-sizing:border-box; width:100%; min-height:200px; resize:none; font:11px var(--cn-mono); background:var(--cn-surface); color:var(--cn-text); border:1px solid var(--cn-border); }
+#cn-term-diagnostics-summary { padding:8px 0; color:var(--cn-accent); font-size:12px; }
+@media (hover:none) { .cn-term-walkie { width:60px; } .cn-term-speed-quick button.cn-speed-compact { height:55px; } }
 
 .cn-term-panel {
   position: fixed;
