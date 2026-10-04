@@ -308,6 +308,34 @@
 .cn-term-pane { position: absolute; inset: 0; display: none; flex-direction: column; }
 .cn-term-pane.active { display: flex; }
 
+/* Grouped navigation and independent tools share the terminal design tokens. */
+.cn-term-panel .hidden { display:none !important; }
+.cn-term-more { margin-left:auto; border:0; border-left:1px solid var(--cn-border-soft); background:transparent; color:var(--cn-muted); font:12px var(--cn-font); padding:0 12px; cursor:pointer; position:relative; }
+.cn-term-teamnav { display:flex; gap:16px; padding:6px 12px; border-bottom:1px solid var(--cn-border-soft); }
+.cn-term-teamnav button { background:none; border:0; border-bottom:1px solid transparent; color:var(--cn-muted); padding:6px 0; font:12px var(--cn-font); position:relative; cursor:pointer; }
+.cn-term-teamnav button.active { color:var(--cn-green); border-bottom-color:var(--cn-green); }
+.cn-term-tool-list { padding:12px; }
+.cn-term-tool { display:flex; align-items:center; gap:8px; padding:12px; margin-bottom:10px; border:1px solid var(--cn-border); background:var(--cn-panel-2); }
+.cn-term-tool>span { flex:1; color:var(--cn-green); font-size:14px; white-space:nowrap; }
+.cn-term-tool button,.cn-term-section-head button,.cn-term-speed-editor button { background:var(--cn-panel); border:1px solid var(--cn-border); color:var(--cn-accent); padding:6px 10px; font:12px var(--cn-font); cursor:pointer; }
+.cn-term-tool button:disabled { opacity:.5; cursor:default; }
+.cn-term-tool .cn-term-tool-primary { background:var(--cn-accent); color:var(--cn-ok-fg); border-color:var(--cn-accent); }
+.cn-term-tool-error { padding:8px 10px; margin:0 0 10px; border-left:2px solid var(--cn-danger); color:var(--cn-danger); overflow-wrap:anywhere; font-size:12px; }
+.cn-term-speed-status:empty { display:none; }
+.cn-term-back { background:none; border:0; color:var(--cn-accent); font:12px var(--cn-font); padding:8px 12px; cursor:pointer; text-align:left; }
+.cn-term-section-head { display:flex; align-items:center; gap:8px; padding:8px; border-bottom:1px solid var(--cn-border-soft); color:var(--cn-green); font-size:13px; }
+.cn-term-section-head>span { flex:1; }
+.cn-term-pane[data-pane="tools"] { overflow-y:auto; }
+.cn-term-speed-editor { padding:12px; display:flex; flex-direction:column; gap:8px; font:13px var(--cn-font); color:var(--cn-text); }
+.cn-term-speed-editor input,.cn-term-speed-editor select { background:var(--cn-surface) !important; border:1px solid var(--cn-border) !important; color:var(--cn-text) !important; border-radius:0 !important; font:13px var(--cn-font) !important; padding:6px !important; max-width:100%; min-width:0; box-sizing:border-box; }
+.cn-term-speed-editor button { border-radius:0; }
+.cn-speed-editor-title { color:var(--cn-green); font-weight:600; }
+.cn-term-speed-editor select { display:block; width:100%; margin-top:6px; }
+.cn-term-cta { padding:6px 12px !important; }
+.cn-term-open-team { align-self:flex-start; width:auto !important; min-height:30px !important; padding:6px 14px !important; font-size:13px !important; }
+.cn-term-speed-editor .cn-speed-save { background:var(--cn-accent); color:var(--cn-ok-fg); }
+@media (hover:none) { .cn-term-tool button,.cn-term-teamnav button,.cn-term-more,.cn-term-section-head button,.cn-term-speed-editor button { min-height:44px; } }
+
 .cn-term-tools {
   flex: none;
   display: flex;
