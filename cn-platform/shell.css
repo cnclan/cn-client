@@ -1,7 +1,7 @@
 :root {
   --cn-green: #8ff0bb;
   --cn-green-dim: rgba(143, 240, 187, 0.12);
-  --cn-accent: #ffb84d;
+  --cn-accent: #7cc8ff;
   --cn-accent-2: #7cc8ff;
   --cn-bg: rgba(10, 15, 21, 0.96);
   --cn-panel: #10161d;
@@ -414,7 +414,7 @@
   min-width: 14px;
   height: 14px;
   padding: 0 3px;
-  background: rgba(255, 184, 77, 0.14);
+  background: rgba(124, 200, 255, 0.14);
   border: 1px solid var(--cn-border);
   color: var(--cn-accent);
   font-size: 9px;
@@ -490,7 +490,7 @@
   flex: none;
   font-size: 9px;
   color: var(--cn-accent);
-  border: 1px solid rgba(255, 184, 77, 0.45);
+  border: 1px solid rgba(124, 200, 255, 0.45);
   padding: 0 3px;
   line-height: 13px;
   animation: cn-team-pulse 2s ease-in-out infinite;
@@ -1026,7 +1026,7 @@
 .cn-term-friend button:hover { background: var(--cn-green); color: var(--cn-ok-fg); border-color: var(--cn-green); }
 .cn-term-friend button[data-reject]:hover, .cn-term-friend button[data-remove]:hover { background: var(--cn-danger); color: #fff; border-color: var(--cn-danger); }
 
-/* 回放 tab（S7）：粘贴 → 压缩 → 短链；与一键开队同款大按钮（琥珀主题） */
+/* 回放 tab（S7）：粘贴 → 压缩 → 短链；与一键开队同款大按钮（冰蓝主题） */
 .cn-term-replay { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
 .cn-term-replayform {
   flex: none;

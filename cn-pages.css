@@ -1,5 +1,5 @@
 /* 公开页共享样式（回放大厅 / 回放详情，S8）——战术终端 2.0 色板：
- * 冷蓝黑基底 #10161d / 琥珀 #ffb84d / 冰蓝 #7cc8ff / 新绿 #8ff0bb */
+ * 冷蓝黑基底 #10161d / 冰蓝 #7cc8ff / 冰蓝 #7cc8ff / 新绿 #8ff0bb */
 *{box-sizing:border-box;}
 html,body{margin:0;min-height:100%;background:#0a0f16;color:#dce5ef;}
 body{font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;
@@ -20,8 +20,8 @@ body{font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;
 .search input{flex:1;background:#0c1219;border:1px solid #1e2733;color:#dce5ef;font-size:13px;padding:10px 12px;outline:none;transition:border-color .15s;font-family:inherit;}
 .search input:focus{border-color:#7cc8ff;}
 .search input::placeholder{color:#5c6b7d;}
-.search button{background:#ffb84d;border:1px solid #ffb84d;color:#0a1219;font-size:13px;font-weight:bold;letter-spacing:2px;padding:0 20px;cursor:pointer;transition:.15s;font-family:inherit;}
-.search button:hover{background:#10161d;color:#ffb84d;}
+.search button{background:#7cc8ff;border:1px solid #7cc8ff;color:#0a1219;font-size:13px;font-weight:bold;letter-spacing:2px;padding:0 20px;cursor:pointer;transition:.15s;font-family:inherit;}
+.search button:hover{background:#10161d;color:#7cc8ff;}
 .search button:active{transform:scale(.985);}
 
 .chips-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
@@ -29,7 +29,7 @@ body{font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;
 .chips{display:flex;flex-wrap:wrap;gap:6px;}
 .chip{border:1px solid #2a3542;background:transparent;color:#a9b8c9;font-size:12px;padding:4px 12px;cursor:pointer;letter-spacing:1px;font-family:inherit;transition:.15s;}
 .chip:hover{border-color:#7cc8ff;color:#7cc8ff;}
-.chip.on{background:#ffb84d;border-color:#ffb84d;color:#0a1219;font-weight:bold;}
+.chip.on{background:#7cc8ff;border-color:#7cc8ff;color:#0a1219;font-weight:bold;}
 .sort-row{display:flex;align-items:center;gap:8px;margin-top:4px;}
 .list-count{margin-left:auto;font-size:11px;color:#5c6b7d;letter-spacing:1px;}
 
