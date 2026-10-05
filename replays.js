@@ -127,7 +127,7 @@
       updateCount();
     } catch (e) {
       state.done = true;
-      if (listEl.children.length) {
+      if (listEl.querySelector(".cn-card")) {
         // 分页失败：追加行内重试，不清空已渲染内容
         var retry = document.createElement("div");
         retry.className = "cn-end";

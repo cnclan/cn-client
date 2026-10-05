@@ -1,29 +1,53 @@
 /* 公开页共享运行时（回放大厅 replays.html / 回放详情 r.html，S8）。
- * API 隧道机制与登录壳一致：gateway.js 先执行并写入 window.__CN_API_BASE；
- * 网络失败时重读 gateway.js 自愈重试一次；本地调试可用 ?api=<tunnel> 覆盖。 */
+ * API 隧道机制与登录壳一致：gateway.js 提供受限格式的后端地址；
+ * 网络失败时安全解析 gateway.js 并自愈重试一次。 */
 (function () {
   "use strict";
-  var LS_API = "cn_api";
-  var ls = function (k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
-  var q = new URLSearchParams(location.search);
-  var API = String(window.__CN_API_BASE || "").replace(/\/+$/, "");
-  var override = q.get("api") || ls(LS_API);
-  if (override) API = override;
+  function apiOrigin(value) {
+    var text = String(value || "").trim().replace(/\/+$/, "").replace(/(?:\/api)+$/, "");
+    try {
+      var u = new URL(text);
+      if (u.protocol !== "https:" || u.username || u.password || u.port || u.pathname !== "/" || u.search || u.hash || !/^(?:[a-z0-9-]+\.)+trycloudflare\.com$/i.test(u.hostname)) return "";
+      return u.origin;
+    } catch (_) { return ""; }
+  }
+  function gatewayOrigin(text) {
+    var match = /^\s*window\.__CN_API_BASE\s*=\s*("(?:\\.|[^"\\])*")\s*;?\s*$/.exec(String(text || ""));
+    if (!match) return "";
+    try { return apiOrigin(JSON.parse(match[1])); } catch (_) { return ""; }
+  }
+  var API = apiOrigin(window.__CN_API_BASE);
 
   var retried = false;
+  function gatewayWarn(reason) {
+    console.warn("[CN gateway][WARN] " + reason + "；检查公开站 gateway.js 与隧道发布状态。");
+  }
   function refreshGateway() {
     return fetch("gateway.js?v=" + Date.now(), { cache: "no-store" })
-      .then(function (r) { if (!r.ok) throw new Error("gw"); return r.text(); })
-      .then(function (t) { (0, eval)(t); })
-      .then(function () {
-        var fresh = String(window.__CN_API_BASE || "").replace(/\/+$/, "");
+      .then(function (r) {
+        if (!r.ok) { gatewayWarn("刷新地址失败 (HTTP " + r.status + ")"); return null; }
+        return r.text();
+      })
+      .then(function (t) {
+        if (t === null) return null;
+        var fresh = gatewayOrigin(t);
+        if (!fresh) { gatewayWarn("gateway.js 格式错误或地址不受信任"); return null; }
+        window.__CN_API_BASE = fresh;
         if (fresh && fresh !== API) { API = fresh; return fresh; }
         return null;
       })
-      .catch(function () { return null; });
+      .catch(function () { gatewayWarn("刷新地址时网络请求失败"); return null; });
   }
 
   async function apiGet(path, params) {
+    if (!API) {
+      if (!retried) {
+        retried = true;
+        var recovered = await refreshGateway();
+        if (recovered) return apiGet(path, params);
+      }
+      throw new Error("连接地址不可用，请稍后重试。");
+    }
     var url = API + "/api" + path;
     var sp = new URLSearchParams();
     for (var k in params || {}) {
