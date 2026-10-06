@@ -952,6 +952,8 @@
 #cn-term-invites-list { display:flex; flex-direction:column; gap:6px; }
 .cn-term-admin-fold { border-top:1px solid var(--cn-border-soft); padding-top:8px; }
 .cn-term-admin-fold summary { color:var(--cn-muted); font-size:12px; cursor:pointer; margin-bottom:8px; }
+#cn-term-distribution-file { box-sizing:border-box; max-width:100%; font:12px var(--cn-font); }
+#cn-term-distribution-file::file-selector-button { background:var(--cn-panel-2); color:var(--cn-accent); border:1px solid var(--cn-border); border-radius:0; padding:6px 8px; margin-right:8px; font:inherit; cursor:pointer; }
 .cn-term-rowline { display: flex; gap: 6px; }
 .cn-term-admin input, .cn-term-admin textarea, .cn-term-admin select, .cn-term-sub input {
   flex: 1;
@@ -1268,3 +1270,14 @@
 #cn-control-banner.cn-control-touch{top:auto;bottom:calc(8px + env(safe-area-inset-bottom));left:8px;right:8px;max-width:none;justify-content:flex-end}
 #cn-control-banner.cn-control-touch span{flex:1;min-width:0;max-width:none}
 #cn-control-banner.cn-control-error span{color:var(--cn-danger)}
+#cn-practice-widget #cn-practice-report{pointer-events:auto;width:auto;padding:0 12px;min-height:44px;background:#10181f;color:#7ecaff;border:1px solid #334552;margin-top:6px;font-size:13px}
+#cn-practice-report-dialog{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:calc(var(--cn-z,99990) + 500);width:min(560px,calc(100vw - 24px));max-height:75vh;overflow:auto;padding:16px;background:#10181f;color:#d5dfe6;border:1px solid #334552;font:13px sans-serif;box-sizing:border-box}
+#cn-practice-report-dialog header{position:sticky;top:-16px;background:#10181f;padding:6px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;color:#8ce8b9}
+#cn-practice-report-dialog button{background:#14202b;color:#7ecaff;border:1px solid #334552;min-height:44px}
+#cn-practice-report-dialog table{width:100%;border-collapse:collapse;margin-top:12px;font-variant-numeric:tabular-nums;color:inherit}
+#cn-practice-report-dialog td{padding:7px 4px;border-bottom:1px solid #283642;text-align:center}
+.cn-practice-report-line{position:relative;height:14px;background:#1b2933;margin:5px 0}
+.cn-practice-report-line i{position:absolute;top:2px;height:10px;width:2px;background:#7ecaff}
+.cn-practice-report-line b{position:absolute;top:4px;width:6px;height:6px;border-radius:50%;background:#8ce8b9}
+.cn-term-control-delegated{flex-wrap:wrap}
+.cn-term-control-delegated-list{width:100%;display:grid;gap:8px}
