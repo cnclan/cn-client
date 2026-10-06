@@ -57,9 +57,9 @@
 .cn-term-walkie.dragging { cursor: grabbing; transition: none; }
 .cn-term-walkie.docked-left { transform: translateX(-50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
 .cn-term-walkie.docked-right { transform: translateX(50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
-/* 触屏：dock 挂边必须更醒目 + 点按唤醒（没有 hover），默认尺寸更大避免误触 */
+/* 手机贴边仍保留完整机身；S 号实际宽 48px，一次点开。 */
 @media (hover: none) {
-  .cn-term-walkie.docked-left, .cn-term-walkie.docked-right { opacity: 0.55; }
+  .cn-term-walkie.docked-left, .cn-term-walkie.docked-right { transform: scale(var(--cn-term-scale, 1)); opacity: 1; }
   .cn-term-walkie { width: 54px; height: 92px; }
   /* 触屏：组队按钮 ≥44px 触控目标 */
   .cn-term-team-join, .cn-term-team-copy, .cn-term-recent-chip, .cn-term-sec-add { min-height: 44px; font-size: 12px; }
@@ -1263,13 +1263,23 @@
 #cn-control-banner{position:fixed;top:8px;left:8px;z-index:calc(var(--cn-z) + 10);display:flex;align-items:center;gap:6px;max-width:calc(100vw - 16px);flex-wrap:wrap;font:13px "Microsoft YaHei",sans-serif;color:#8de9ba;pointer-events:none;background:transparent}
 #cn-control-banner[hidden]{display:none}
 #cn-control-banner span{background:rgba(12,18,25,.88);padding:6px 8px;max-width:min(480px,calc(100vw - 80px));white-space:normal;overflow-wrap:anywhere}
-#cn-control-banner label{background:rgba(12,18,25,.88);padding:4px;color:#7cc8ff}
-#cn-control-banner input{width:64px;min-height:36px;background:#0c1219;color:#7cc8ff;border:1px solid #354956;pointer-events:auto}
+#cn-control-banner button[data-control-operation]{width:124px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cn-accent);border-color:var(--cn-accent)}
 #cn-control-banner button,#cn-term-control-quick{min-width:44px;min-height:44px;background:#0c1219;color:#8de9ba;border:1px solid #496c5d;pointer-events:auto;cursor:pointer}
 #cn-term-control-list{display:flex;flex-direction:column;gap:5px}
 #cn-control-banner.cn-control-touch{top:auto;bottom:calc(8px + env(safe-area-inset-bottom));left:8px;right:8px;max-width:none;justify-content:flex-end}
 #cn-control-banner.cn-control-touch span{flex:1;min-width:0;max-width:none}
+#cn-control-banner:not(.cn-control-error){top:auto;bottom:var(--cn-control-bar-inset,80px);left:50%;right:auto;transform:translateX(-50%);flex-wrap:nowrap;gap:4px}
+#cn-control-banner:not(.cn-control-error) span{max-width:124px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+.cn-term-tool[aria-label="管理员指挥"]{flex-wrap:wrap}
+#cn-term-control-status{flex-basis:100%;margin-top:6px;font-size:12px;overflow-wrap:anywhere;color:var(--cn-accent)}
 #cn-control-banner.cn-control-error span{color:var(--cn-danger)}
+.cn-term-naval-settings{padding:10px;border:1px solid #354956;color:#7cc8ff}
+.cn-term-naval-settings[hidden]{display:none}
+.cn-term-naval-settings label{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+.cn-term-naval-settings label span{flex:1;min-width:120px}
+.cn-term-naval-settings input[type="range"]{width:120px;min-height:44px;accent-color:#7cc8ff}
+.cn-term-naval-settings output{min-width:36px;text-align:right}
+.cn-term-naval-settings button{min-height:44px}
 #cn-practice-widget #cn-practice-report{pointer-events:auto;width:auto;padding:0 12px;min-height:44px;background:#10181f;color:#7ecaff;border:1px solid #334552;margin-top:6px;font-size:13px}
 #cn-practice-report-dialog{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:calc(var(--cn-z,99990) + 500);width:min(560px,calc(100vw - 24px));max-height:75vh;overflow:auto;padding:16px;background:#10181f;color:#d5dfe6;border:1px solid #334552;font:13px sans-serif;box-sizing:border-box}
 #cn-practice-report-dialog header{position:sticky;top:-16px;background:#10181f;padding:6px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;color:#8ce8b9}
