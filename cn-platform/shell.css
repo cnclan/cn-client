@@ -368,6 +368,8 @@
 .cn-term-speed-editor input,.cn-term-speed-editor select { background:var(--cn-surface) !important; border:1px solid var(--cn-border) !important; color:var(--cn-text) !important; border-radius:0 !important; font:13px var(--cn-font) !important; padding:6px !important; max-width:100%; min-width:0; box-sizing:border-box; }
 .cn-term-speed-editor button { border-radius:0; }
 .cn-speed-editor-title { color:var(--cn-green); font-weight:600; }
+.cn-speed-preset-summary { color:var(--cn-text); padding:8px 0; }
+.cn-speed-preset-hint { color:var(--cn-muted); font-size:12px; line-height:1.5; }
 .cn-term-speed-editor select { display:block; width:100%; margin-top:6px; }
 .cn-term-cta { padding:6px 12px !important; }
 .cn-term-open-team { align-self:flex-start; width:auto !important; min-height:30px !important; padding:6px 14px !important; font-size:13px !important; }
