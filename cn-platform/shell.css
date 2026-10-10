@@ -55,8 +55,7 @@
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 .cn-term-walkie.dragging { cursor: grabbing; transition: none; }
-.cn-term-walkie.docked-left { transform: translateX(-50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
-.cn-term-walkie.docked-right { transform: translateX(50%) scale(var(--cn-term-scale, 1)); opacity: 0.35; }
+.cn-term-walkie.docked-left, .cn-term-walkie.docked-right { transform: scale(var(--cn-term-scale, 1)); opacity: 1; }
 /* 手机贴边仍保留完整机身；S 号实际宽 48px，一次点开。 */
 @media (hover: none) {
   .cn-term-walkie.docked-left, .cn-term-walkie.docked-right { transform: scale(var(--cn-term-scale, 1)); opacity: 1; }
@@ -219,6 +218,7 @@
   font-family: var(--cn-font);
 }
 .cn-term-titlebar {
+  touch-action: none;
   height: 34px;
   flex: none;
   display: flex;
@@ -316,8 +316,10 @@
   justify-content: center;
 }
 .cn-term-tab.active .cn-term-tb { background: var(--cn-ok-fg); color: var(--cn-accent); }
-.cn-term-pbody { flex: 1; overflow: hidden; position: relative; }
-.cn-term-pane { position: absolute; inset: 0; display: none; flex-direction: column; }
+.cn-term-pbody { flex: 1; min-height:0; overflow: hidden; position: relative; }
+.cn-term-pane { position: absolute; inset: 0; display: none; flex-direction: column; min-height:0; }
+.cn-term-pane[data-pane="online"] { overflow-y:auto; overscroll-behavior:contain; touch-action:pan-y; }
+.cn-term-pane[data-pane="online"] > * { flex-shrink:0; }
 .cn-term-pane.active { display: flex; }
 
 /* Grouped navigation and independent tools share the terminal design tokens. */
@@ -1293,3 +1295,14 @@
 .cn-practice-report-line b{position:absolute;top:4px;width:6px;height:6px;border-radius:50%;background:#8ce8b9}
 .cn-term-control-delegated{flex-wrap:wrap}
 .cn-term-control-delegated-list{width:100%;display:grid;gap:8px}
+/* Presence stays compact; the full ID/profile history is administrator-only. */
+.cn-term-online-main{flex:1;min-width:0;text-align:left;display:flex;flex-direction:column;gap:3px}
+.cn-term-online-main small.cn-term-activity-line{white-space:normal;color:var(--cn-accent,#7dccff);font-size:12px}
+.cn-term-profile-card{max-height:calc(100% - 16px);overflow:auto;box-sizing:border-box}
+.cn-term-game-accounts{padding:12px 0 0;margin-top:12px;border-top:1px solid var(--cn-border)}
+.cn-term-game-accounts>button{border:1px solid var(--cn-border);background:var(--cn-panel-2);color:var(--cn-green);font:inherit;font-size:11px;padding:4px 8px;cursor:pointer}
+.cn-term-game-accounts>button:hover{background:var(--cn-green);color:var(--cn-ok-fg)}
+.cn-term-game-accounts p{font-size:11px;color:var(--cn-muted);line-height:1.5}
+.cn-term-game-accounts details{padding:8px 0;border-bottom:1px solid #344451}
+.cn-term-game-accounts dl{display:grid;grid-template-columns:1fr 1fr;font-size:12px;gap:4px}
+.cn-term-game-accounts dd{margin:0;overflow-wrap:anywhere}
