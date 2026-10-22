@@ -82,6 +82,19 @@ body{font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;
 .cn-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .cn-toast-err{border-color:#ff7d6b;color:#ff7d6b;}
 
+/* 回放解析面板（replay-view.js）与解析器页 */
+.cn-card-warn{color:#ffb86b;}
+.cn-badge-warn{color:#ffb86b;border-color:rgba(255,184,107,.45);}
+.cn-select{background:#0c1219;border:1px solid #2a3542;color:#dce5ef;font-size:12px;padding:5px 8px;font-family:inherit;max-width:100%;}
+.cn-select:focus{outline:none;border-color:#7cc8ff;}
+.cn-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.cn-btn-danger{background:transparent;border:1px solid #ff7d6b;color:#ff7d6b;font-size:12px;letter-spacing:2px;padding:8px 16px;cursor:pointer;font-family:inherit;}
+.cn-btn-danger:hover{background:#ff7d6b;color:#0a1219;}
+.cn-parse{margin-top:22px;border-top:1px solid #1e2733;padding-top:18px;}
+.tool-area{width:100%;min-height:110px;resize:vertical;background:#0c1219;border:1px solid #1e2733;color:#dce5ef;font:12px/1.5 Consolas,"Cascadia Mono",monospace;padding:10px 12px;outline:none;}
+.tool-area:focus{border-color:#7cc8ff;}
+.tool-label{font-size:11px;color:#8b9bad;letter-spacing:2px;margin:16px 0 8px;}
+
 .hidden{display:none;}
 @keyframes cn-breathe{0%,100%{opacity:1;box-shadow:0 0 4px rgba(143,240,187,.7);}50%{opacity:.35;box-shadow:0 0 12px rgba(143,240,187,1);}}
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CN CLIENT · 回放解析器</title>
+<link rel="icon" href="favicon.ico" />
+<link rel="stylesheet" href="cn-pages.css?v=2" />
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><span class="brand-dot"></span><h1>CN CLIENT · 回放解析器</h1><span>REPLAY ANALYZER</span></div>
+    <div class="nav"><a href="replays.html">回放大厅</a><a href="index.html">登录 / 游戏</a></div>
+  </div>
+  <div class="cn-detail">
+    <div id="cn-tool-login" class="cn-empty hidden"><b>需要登录</b><p>解析和生成回放由服务器完成，请先登录 CN 客户端，再回到本页。</p><p><a href="index.html">前往登录 →</a></p></div>
+    <div id="cn-tool" class="hidden">
+      <div class="tool-label">回放代码（游戏内 菜单 → 重播 → Select All → Copy）</div>
+      <textarea id="cn-tool-code" class="tool-area" spellcheck="false" placeholder="把回放代码整段粘到这里"></textarea>
+      <div class="cn-btn-row">
+        <button type="button" class="chip" id="cn-tool-parse">解析</button>
+        <button type="button" class="chip" id="cn-tool-copy">复制回放代码</button>
+        <button type="button" class="chip" id="cn-tool-clear">清空</button>
+      </div>
+      <div class="tool-label">回放 JSON → 生成回放代码</div>
+      <textarea id="cn-tool-json" class="tool-area" spellcheck="false" placeholder="粘贴导出的回放 JSON，或选择 .json 文件"></textarea>
+      <div class="cn-btn-row">
+        <button type="button" class="chip" id="cn-tool-file">选择文件…</button>
+        <button type="button" class="chip" id="cn-tool-encode">生成回放代码</button>
+        <input type="file" id="cn-tool-file-input" accept=".json,application/json" hidden />
+      </div>
+      <div class="cn-tip" id="cn-tool-status" role="status"></div>
+      <div class="cn-parse hidden" id="cn-tool-result"></div>
+    </div>
+  </div>
+</div>
+<script src="gateway.js?v=1"></script>
+<script src="cn-pages.js?v=2"></script>
+<script src="replay-view.js?v=1"></script>
+<script src="replay-tool.js?v=1"></script>
+</body>
+</html>

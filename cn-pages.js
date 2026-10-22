@@ -75,25 +75,43 @@
     }
   }
 
-  // 模式/地图枚举与后端 REPLAY_MODES / REPLAY_MAPS 同源（§5.6 顺序）
+  // 模式/地图枚举与后端 REPLAY_MODES / REPLAY_MAPS 同源：标签由服务器从回放本身解析得出
+  // （platform/replay-codec.js 的 replaySummary），不再由上传者手选。
   var MODES = [
     { key: "team", label: "团队" },
     { key: "br", label: "大逃杀" },
     { key: "1v1", label: "1V1" },
     { key: "zombie", label: "僵尸" },
+    { key: "single", label: "单机" },
     { key: "other", label: "其他" }
   ];
   var MAPS = [
-    { key: "Asia", label: "亚洲" },
-    { key: "Europe", label: "欧洲" },
-    { key: "World 1", label: "世界1" },
-    { key: "British Isles", label: "不列颠群岛" },
-    { key: "North America", label: "北美" },
-    { key: "South America", label: "南美" },
-    { key: "Africa", label: "非洲" },
-    { key: "Caucasia", label: "高加索" },
-    { key: "World 2", label: "世界2" },
-    { key: "Middle East", label: "地中海沿岸" },
+    { key: "Europe", label: "欧洲", real: true },
+    { key: "World 1", label: "世界1", real: true },
+    { key: "Caucasia", label: "高加索", real: true },
+    { key: "Africa", label: "非洲", real: true },
+    { key: "Middle East", label: "中东", real: true },
+    { key: "Scandinavia", label: "斯堪的纳维亚", real: true },
+    { key: "North America", label: "北美", real: true },
+    { key: "South America", label: "南美", real: true },
+    { key: "Asia", label: "亚洲", real: true },
+    { key: "Australia", label: "澳大利亚", real: true },
+    { key: "World 2", label: "世界2", real: true },
+    { key: "British Isles", label: "不列颠群岛", real: true },
+    { key: "Mare Nostrum", label: "地中海", real: true },
+    { key: "White Arena", label: "白色竞技场" },
+    { key: "Black Arena", label: "黑色竞技场" },
+    { key: "Island", label: "岛屿" },
+    { key: "Mountains 1", label: "山地1" },
+    { key: "Desert", label: "沙漠" },
+    { key: "Swamp", label: "沼泽" },
+    { key: "White Plains", label: "白色平原" },
+    { key: "Cliffs", label: "悬崖" },
+    { key: "Pond", label: "池塘" },
+    { key: "Halo", label: "光环" },
+    { key: "Island Kingdom", label: "岛屿王国" },
+    { key: "Mountains 2", label: "山地2" },
+    { key: "custom", label: "自定义地图" },
     { key: "other", label: "其他" }
   ];
   function modeLabel(key) { var m = MODES.find(function (x) { return x.key === key; }); return m ? m.label : key; }
@@ -121,6 +139,59 @@
   }
 
   function fmtViews(n) { return String(Number(n) || 0); }
+
+  function fmtDuration(sec) {
+    sec = Math.max(0, Math.round(Number(sec) || 0));
+    return Math.floor(sec / 60) + "分" + (sec % 60) + "秒";
+  }
+
+  // Auto tags from the server (replaySummary). Extra facts beyond mode/map, as text.
+  function tagFacts(tags) {
+    if (!tags || typeof tags !== "object") return [];
+    if (tags.status === "invalid") return ["无法解析"];
+    var out = [];
+    if (Number.isInteger(tags.humans)) out.push(tags.humans + " 名玩家");
+    if (Number.isInteger(tags.teams) && tags.teams >= 2) out.push(tags.teams + " 队");
+    if (tags.contest === true) out.push("竞赛");
+    if (Number.isFinite(tags.durationSec)) out.push("约 " + fmtDuration(tags.durationSec));
+    if (tags.status === "incomplete") out.push("回放不完整");
+    if (tags.status === "custom-map") out.push("自定义地图");
+    return out;
+  }
+
+  // The login shell keeps the approved bearer in cn_token on this same origin;
+  // public pages only read it for the logged-in tools (analyzer, admin delete).
+  function savedToken() {
+    try { return localStorage.getItem("cn_token") || ""; }
+    catch (_) { console.warn("[CN pages][WARN] 无法读取登录状态；需要登录的功能不可用。"); return ""; }
+  }
+
+  async function apiSend(method, path, body) {
+    if (!API) {
+      var recovered = await refreshGateway();
+      if (!recovered) throw new Error("连接地址不可用，请稍后重试。");
+    }
+    var token = savedToken();
+    var headers = { "Content-Type": "application/json" };
+    if (token) headers.Authorization = "Bearer " + token;
+    var r = await fetch(API + "/api" + path, { method: method, headers: headers, cache: "no-store", body: body === undefined ? undefined : JSON.stringify(body) });
+    var data = await r.json().catch(function () { return null; });
+    if (!r.ok) {
+      var err = new Error((data && data.error) || "HTTP " + r.status);
+      err.status = r.status;
+      throw err;
+    }
+    return data;
+  }
+
+  async function gzipBase64(text) {
+    if (typeof CompressionStream === "undefined") throw new Error("当前浏览器不支持 gzip 压缩，请使用新版 Chrome / Edge / Firefox / Safari");
+    var stream = new Blob([new TextEncoder().encode(text)]).stream().pipeThrough(new CompressionStream("gzip"));
+    var bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+    var bin = "";
+    for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
 
   function base64ToBytes(b64) {
     var bin = atob(b64);
@@ -177,6 +248,11 @@
 
   window.CNPages = {
     apiGet: apiGet,
+    apiSend: apiSend,
+    savedToken: savedToken,
+    gzipBase64: gzipBase64,
+    tagFacts: tagFacts,
+    fmtDuration: fmtDuration,
     esc: esc,
     fmtSize: fmtSize,
     fmtTime: fmtTime,

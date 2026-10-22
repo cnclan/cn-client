@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CN CLIENT · 回放大厅</title>
 <link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="cn-pages.css?v=1" />
+<link rel="stylesheet" href="cn-pages.css?v=2" />
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
     <div class="brand"><span class="brand-dot"></span><h1>CN CLIENT · 回放大厅</h1><span>REPLAY ARCHIVE</span></div>
-    <div class="nav"><a href="r.html">回放详情</a><a href="index.html">登录 / 游戏</a></div>
+    <div class="nav"><a href="replay-tool.html">解析器</a><a href="index.html">登录 / 游戏</a></div>
   </div>
   <div class="toolbar">
     <form class="search" id="cn-search-form">
@@ -19,7 +19,7 @@
       <button type="submit">搜索</button>
     </form>
     <div class="chips-row"><span class="chips-label">模式</span><div class="chips" id="cn-mode-chips"></div></div>
-    <div class="chips-row"><span class="chips-label">地图</span><div class="chips" id="cn-map-chips"></div></div>
+    <div class="chips-row"><span class="chips-label">地图</span><select class="cn-select" id="cn-map-select" aria-label="按地图筛选"></select></div>
     <div class="sort-row"><span class="chips-label">排序</span><div class="chips" id="cn-sort-chips"></div><span class="list-count" id="cn-count"></span></div>
   </div>
   <div id="cn-list"></div>
@@ -28,7 +28,7 @@
   <div id="cn-error" class="cn-error hidden"></div>
 </div>
 <script src="gateway.js?v=1"></script>
-<script src="cn-pages.js?v=1"></script>
-<script src="replays.js?v=1"></script>
+<script src="cn-pages.js?v=2"></script>
+<script src="replays.js?v=2"></script>
 </body>
 </html>

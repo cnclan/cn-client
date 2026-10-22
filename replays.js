@@ -1,4 +1,5 @@
-/* 回放大厅（公开，无登录）：搜索 + 模式/地图 chips + 排序 + 滚动分页（before cursor, limit 50）。 */
+/* 回放大厅（公开，无登录）：搜索 + 模式 chips/地图下拉 + 排序 + 滚动分页（before cursor, limit 50）。
+ * 模式/地图/人数/时长是服务器从回放本身解析出的自动标签。 */
 (function () {
   "use strict";
   var P = window.CNPages;
@@ -26,11 +27,18 @@
     P.MODES.forEach(function (m) {
       modesBox.appendChild(chip(m.label, state.mode === m.key, function () { setMode(m.key); }));
     });
-    var mapsBox = document.getElementById("cn-map-chips");
-    mapsBox.appendChild(chip("全部", !state.map, function () { setMap(""); }));
-    P.MAPS.forEach(function (m) {
-      mapsBox.appendChild(chip(m.label, state.map === m.key, function () { setMap(m.key); }));
+    var mapSelect = document.getElementById("cn-map-select");
+    var option = function (parent, key, label) { var o = document.createElement("option"); o.value = key; o.textContent = label; parent.appendChild(o); };
+    option(mapSelect, "", "全部地图");
+    [["真实地图", true], ["程序地图", false]].forEach(function (group) {
+      var g = document.createElement("optgroup");
+      g.label = group[0];
+      P.MAPS.forEach(function (m) { if (!!m.real === group[1] && m.key !== "custom" && m.key !== "other") option(g, m.key, m.label); });
+      mapSelect.appendChild(g);
     });
+    option(mapSelect, "custom", "自定义地图");
+    option(mapSelect, "other", "其他 / 无法解析");
+    mapSelect.onchange = function () { setMap(mapSelect.value); };
     var sortBox = document.getElementById("cn-sort-chips");
     sortBox.appendChild(chip("最新", state.sort === "created", function () { setSort("created"); }));
     sortBox.appendChild(chip("最热", state.sort === "views", function () { setSort("views"); }));
@@ -86,6 +94,7 @@
       '<div class="cn-card-meta">' +
         '<span class="cn-badge cn-badge-mode">' + P.esc(P.modeLabel(r.mode)) + '</span>' +
         '<span class="cn-badge cn-badge-map">' + P.esc(P.mapLabel(r.map)) + '</span>' +
+        P.tagFacts(r.tags).map(function (f) { return '<span class="cn-card-sub' + (f === "回放不完整" || f === "无法解析" ? " cn-card-warn" : "") + '">' + P.esc(f) + '</span>'; }).join("") +
         '<span class="cn-card-sub">作者 ' + P.esc(r.username || "-") + '</span>' +
         '<span class="cn-card-sub">' + P.esc(P.fmtSize(r.size)) + '</span>' +
         '<span class="cn-card-sub">' + P.esc(P.fmtTime(r.createdAt)) + '</span>' +
