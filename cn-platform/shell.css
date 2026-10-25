@@ -347,7 +347,7 @@
 #cn-practice-widget button:hover { border-color:var(--cn-accent); color:var(--cn-accent); }
 .cn-practice-track { position:relative; height:14px; background:rgba(10,15,21,.25); overflow:hidden; box-shadow:inset 0 1px 3px rgba(0,0,0,.4); }
 .cn-practice-fill { height:100%; background:linear-gradient(90deg,var(--cn-green),var(--cn-accent)); transition:width .05s linear; }
-.cn-practice-markers i { position:absolute; top:0; height:100%; width:3px; background:var(--cn-accent); }
+.cn-practice-markers i { position:absolute; top:0; height:100%; width:3px; background:var(--cn-accent); transform:translateX(-50%); }
 .cn-practice-markers i.passed { opacity:.25; }
 .cn-practice-triangle-row { position:relative; height:9px; margin:2px 0; }
 .cn-practice-triangle-row i { position:absolute; border-left:4px solid transparent; border-right:4px solid transparent; border-bottom:8px solid var(--cn-danger); transform:translateX(-50%); }
@@ -1267,15 +1267,23 @@
 .cn-term-naval-settings input[type="range"]{width:120px;min-height:44px;accent-color:#7cc8ff}
 .cn-term-naval-settings output{min-width:36px;text-align:right}
 .cn-term-naval-settings button{min-height:44px}
-#cn-practice-widget #cn-practice-report{pointer-events:auto;width:auto;padding:0 12px;min-height:44px;background:#10181f;color:#7ecaff;border:1px solid #334552;margin-top:6px;font-size:13px}
+/* 练习偏差三色（消息与报告共用，CN 色系）：绿=完美 黄=小偏差 红=偏差较大 */
+.cn-practice-good{color:#8ce8b9;font-weight:600}
+.cn-practice-warn{color:#ffb86b;font-weight:600}
+.cn-practice-bad{color:#ff7d6b;font-weight:600}
+.cn-practice-na{color:#8b9bad}
+#cn-practice-report-dialog th{padding:6px 4px;color:#8b9bad;font-weight:normal;font-size:12px;text-align:center;border-bottom:1px solid #334552}
+#cn-practice-report-dialog .cn-practice-legend,#cn-practice-report-dialog .cn-practice-average{font-size:12px;line-height:1.6;color:#a9b8c9;margin:10px 0 0}
+#cn-practice-report-dialog .cn-practice-average{color:#7ecaff}
 #cn-practice-report-dialog{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:calc(var(--cn-z,99990) + 500);width:min(560px,calc(100vw - 24px));max-height:75vh;overflow:auto;padding:16px;background:#10181f;color:#d5dfe6;border:1px solid #334552;font:13px sans-serif;box-sizing:border-box}
 #cn-practice-report-dialog header{position:sticky;top:-16px;background:#10181f;padding:6px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;color:#8ce8b9}
 #cn-practice-report-dialog button{background:#14202b;color:#7ecaff;border:1px solid #334552;min-height:44px}
 #cn-practice-report-dialog table{width:100%;border-collapse:collapse;margin-top:12px;font-variant-numeric:tabular-nums;color:inherit}
 #cn-practice-report-dialog td{padding:7px 4px;border-bottom:1px solid #283642;text-align:center}
 .cn-practice-report-line{position:relative;height:14px;background:#1b2933;margin:5px 0}
-.cn-practice-report-line i{position:absolute;top:2px;height:10px;width:2px;background:#7ecaff}
-.cn-practice-report-line b{position:absolute;top:4px;width:6px;height:6px;border-radius:50%;background:#8ce8b9}
+.cn-practice-report-line i{position:absolute;top:2px;height:10px;width:2px;background:#7ecaff;transform:translateX(-50%)}
+.cn-practice-report-line b{position:absolute;top:4px;width:6px;height:6px;border-radius:50%;background:#8ce8b9;transform:translateX(-50%)}
+.cn-practice-report-line b.cn-practice-warn{background:#ffb86b}.cn-practice-report-line b.cn-practice-bad{background:#ff7d6b}.cn-practice-report-line b.cn-practice-na{background:#9fb0bd}
 .cn-term-control-delegated{flex-wrap:wrap}
 .cn-term-control-delegated-list{width:100%;display:grid;gap:8px}
 /* Presence stays compact; the full ID/profile history is administrator-only. */

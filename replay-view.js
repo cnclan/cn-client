@@ -8,8 +8,12 @@
   // host: { esc, modeLabel, mapLabel, fmtDuration, copyText, toast }; public pages use CNPages.
   var P = null;
   var STYLE_ID = "cn-rv-style";
-  var CSS = ".rv{margin-top:6px;color:#dce5ef;font-size:13px;line-height:1.5;text-align:left}.rv-h{font-size:13px;letter-spacing:3px;color:#8ff0bb;margin:22px 0 10px;font-weight:bold}.rv-sub{font-size:11px;color:#5c6b7d;letter-spacing:.5px;font-weight:normal}.rv-warn{border:1px solid rgba(255,184,107,.45);color:#ffb86b;font-size:12px;line-height:1.7;padding:10px 12px;margin-bottom:12px}.rv-actions{display:flex;gap:8px;flex-wrap:wrap}.rv-btn{border:1px solid #2a3542;background:transparent;color:#a9b8c9;font-size:12px;padding:4px 12px;cursor:pointer;letter-spacing:1px;font-family:inherit}.rv-btn:hover{border-color:#7cc8ff;color:#7cc8ff}.rv-kv{width:100%;border-collapse:collapse;margin-bottom:20px}.rv-kv td{padding:9px 6px;border-bottom:1px solid #1e2733;font-size:12px;color:#dce5ef;letter-spacing:.5px;word-break:break-all}.rv-kv td:first-child{width:90px;color:#8b9bad;letter-spacing:2px;font-size:11px;word-break:normal}.rv-mono{font-family:Consolas,\"Cascadia Mono\",monospace;color:#7cc8ff}.rv-hidden{display:none}.rv-scroll{overflow:auto;max-height:520px;border:1px solid #1e2733}.rv-players{max-height:300px}.rv-table{width:100%;border-collapse:collapse;font-size:12px}.rv-table th{position:sticky;top:0;background:#141c25;color:#8b9bad;font-weight:normal;letter-spacing:1px;text-align:left;padding:7px 8px;white-space:nowrap}.rv-table td{padding:6px 8px;border-top:1px solid #1a222c;color:#dce5ef;white-space:nowrap}.rv-dot{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;border:1px solid rgba(255,255,255,.25)}.rv-badge{font-size:11px;padding:1px 6px;border:1px solid;letter-spacing:1px}.rv-stage{font-size:11px;color:#8b9bad}.rv-stage.pick{color:#ffb86b}.rv-filters{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}.rv-filter{border:1px solid #2a3542;padding:4px 10px;font-size:12px;color:#a9b8c9;max-width:100%}.rv-filter summary{cursor:pointer;letter-spacing:1px}.rv-checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 12px;max-height:180px;overflow:auto;padding:8px 0 4px}.rv-check{font-size:12px;color:#a9b8c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.rv-check input{accent-color:#7cc8ff;vertical-align:-2px}.rv-more{display:block;margin:10px auto 0}";
+  var CSS = ".rv{margin-top:6px;color:#dce5ef;font-size:13px;line-height:1.5;text-align:left}.rv-h{font-size:13px;letter-spacing:3px;color:#8ff0bb;margin:22px 0 10px;font-weight:bold}.rv-sub{font-size:11px;color:#5c6b7d;letter-spacing:.5px;font-weight:normal}.rv-warn{border:1px solid rgba(255,184,107,.45);color:#ffb86b;font-size:12px;line-height:1.7;padding:10px 12px;margin-bottom:12px}.rv-actions{display:flex;gap:8px;flex-wrap:wrap}.rv-btn{border:1px solid #2a3542;background:transparent;color:#a9b8c9;font-size:12px;padding:4px 12px;cursor:pointer;letter-spacing:1px;font-family:inherit}.rv-btn:hover{border-color:#7cc8ff;color:#7cc8ff}.rv-kv{width:100%;border-collapse:collapse;margin-bottom:20px}.rv-kv td{padding:9px 6px;border-bottom:1px solid #1e2733;font-size:12px;color:#dce5ef;letter-spacing:.5px;word-break:break-all}.rv-kv td:first-child{width:90px;color:#8b9bad;letter-spacing:2px;font-size:11px;word-break:normal}.rv-mono{font-family:Consolas,\"Cascadia Mono\",monospace;color:#7cc8ff}.rv-hidden{display:none}.rv-scroll{overflow:auto;max-height:520px;border:1px solid #1e2733}.rv-players{max-height:300px}.rv-table{width:100%;border-collapse:collapse;font-size:12px}.rv-table th{position:sticky;top:0;background:#141c25;color:#8b9bad;font-weight:normal;letter-spacing:1px;text-align:left;padding:7px 8px;white-space:nowrap}.rv-table td{padding:6px 8px;border-top:1px solid #1a222c;color:#dce5ef;white-space:nowrap}.rv-dot{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;border:1px solid rgba(255,255,255,.25)}.rv-badge{font-size:11px;padding:1px 6px;border:1px solid;letter-spacing:1px}.rv-stage{font-size:11px;color:#8b9bad}.rv-stage.pick{color:#ffb86b}.rv-filters{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}.rv-filter{border:1px solid #2a3542;padding:4px 10px;font-size:12px;color:#a9b8c9;max-width:100%}.rv-filter summary{cursor:pointer;letter-spacing:1px}.rv-checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 12px;max-height:180px;overflow:auto;padding:8px 0 4px}.rv-check{font-size:12px;color:#a9b8c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.rv-check input{accent-color:#7cc8ff;vertical-align:-2px}.rv-more{display:block;margin:10px auto 0}.rv-team{display:inline-block;font-size:11px;padding:0 6px;margin-right:6px;border:1px solid;letter-spacing:1px;white-space:nowrap}";
   var NEUTRAL = 512;
+  // Team deal recomputed by the server from the game's own rule (tags.teamDeal); colour index = native team colour.
+  var TEAM_NAMES = ["灰", "红", "绿", "蓝", "黄", "紫", "青", "白", "黑"];
+  // The game's own readable team text colours (bo.bq), not the raw territory colours.
+  var TEAM_RGB = ["210,200,200", "255,120,120", "0,230,0", "150,150,255", "240,240,25", "255,70,255", "25,240,240", "255,255,255", "170,170,170"];
   var SPAWN_SPAN = 50, MULTI_PER_TICK = 7, MS_PER_TICK = 56, PAGE = 400;
   var EMOJIS = ["\u{1F970}","\u{1F60E}","\u{1F618}","\u{1F61C}","\u{1F917}","\u{1F973}","\u{1F607}","\u{1F60A}","\u{1F971}","\u{1F644}","\u{1F914}","\u{1F97A}","\u{1F621}","\u{1F62D}","\u{1F631}","\u{1F61E}","\u{1F480}","\u{1F479}","\u{1F44B}","\u{1F64F}","\u{1F44F}","\u{1F4AA}","\u{1F64B}‍♂️","\u{1F926}‍♂️","⬆️","➡️","⬇️","⬅️","\u{1F440}","❤️","\u{1F494}","\u{1F4A5}","\u{1F525}","\u{1FAA6}","\u{1F947}","\u{1F948}","\u{1F949}","\u{1F396}️","\u{1F3C5}","\u{1F451}","\u{1F389}","\u{1F4AF}","✝️","☪️","\u{1F549}️","☸️","✡️","☦️","⚛️"];
   var EMOJIS_CUSTOM = ["⚔️","⛵️","\u{1F4B0}","\u{1F91D}","⚖️","✌️","\u{1F54A}️","\u{1F6E1}️","\u{1F3F3}️","\u{1F44D}","\u{1F44E}","\u{1F198}","✊"];
@@ -40,7 +44,10 @@
     var names = Array.isArray(json.PlayerNames) ? json.PlayerNames : [];
     var colors = Array.isArray(json.PlayerColors_RGB666) ? json.PlayerColors_RGB666 : [];
     var accounts = Array.isArray(json.AccountNames) ? json.AccountNames : [];
-    var ops = (Array.isArray(json.Operations) ? json.Operations : []).map(function (o, i) {
+    // tt's "end" label is the replay's real end moment, not an operation.
+    var all = Array.isArray(json.Operations) ? json.Operations : [];
+    var endLabel = all.filter(function (o) { return o && o.Type === "end" && Number.isFinite(Number(o.Moment)); })[0] || null;
+    var ops = all.filter(function (o) { return !(o && o.Type === "end"); }).map(function (o, i) {
       o = o && typeof o === "object" ? o : {};
       var raw = o.MultiTick !== undefined && o.MultiTick !== null ? int(o.MultiTick) : int(o.TiTick) + base;
       var t = null, pick = false;
@@ -54,6 +61,7 @@
     ops.forEach(function (op) { if (op.type === "surrender" || op.type === "left") deadAt[op.player] = op.raw; });
     var last = 0;
     ops.forEach(function (op) { if (op.t !== null && op.t > last) last = op.t; });
+    if (endLabel && !incomplete) last = Math.max(last, int(endLabel.Moment));
     return { json: json, humans: humans, multi: multi, names: names, colors: colors, accounts: accounts, ops: ops, deadAt: deadAt, incomplete: incomplete, totalSec: last * MS_PER_TICK / 1000 };
   }
 
@@ -123,6 +131,24 @@
     }
   }
 
+  // Accept the deal only in its exact shape: an integer team count and one colour index 0–8 per player.
+  function teamDealOf(tags, json) {
+    var d = tags && tags.teamDeal;
+    if (!d || !Array.isArray(d.players) || d.players.length !== int(json.PlayerCount) || !(int(d.teams) >= 2 && int(d.teams) <= 8)) return null;
+    for (var i = 0; i < d.players.length; i++) if (!(d.players[i] === int(d.players[i]) && d.players[i] >= 0 && d.players[i] <= 8)) return null;
+    return d;
+  }
+  function teamBadge(c) {
+    if (!(c >= 0 && c <= 8)) return "—";
+    return '<span class="rv-team" style="color:rgb(' + TEAM_RGB[c] + ');border-color:rgba(' + TEAM_RGB[c] + ',.55)">' + TEAM_NAMES[c] + (c === 0 ? "（人机）" : "队") + "</span>";
+  }
+  // Humans per team colour, in the order teams appear; bots are noted separately.
+  function teamSummary(m, deal) {
+    var counts = {}, order = [];
+    for (var p = 0; p < m.humans; p++) { var c = deal.players[p]; if (counts[c] === undefined) { counts[c] = 0; order.push(c); } counts[c]++; }
+    var bots = deal.players.slice(m.humans), spread = bots.some(function (c) { return c !== 0; });
+    return order.map(function (c) { return TEAM_NAMES[c] + "队 " + counts[c] + " 人"; }).join(" · ") + (bots.length ? (spread ? " · 人机分散在各队" : " · 人机为灰队") : "");
+  }
   function configRows(m, tags) {
     var j = m.json, mapKey = tags && tags.map ? tags.map : "";
     // tt mapped GameMode 0/1 to 单机/联机, but real 9-human BR replays carry
@@ -133,9 +159,10 @@
       ["玩家", "总 " + int(j.PlayerCount) + " · 人类 " + m.humans + " · 视角 #" + int(j.SelectedPlayer)],
       ["模式", mode + " · 队伍 " + int(j.NumberTeams) + (j.IsZombieMode ? " · 僵尸" : "") + (j.IsContest ? " · 竞赛" : "")],
       ["地形", "水面" + (j.PassibleWater ? "可" : "不可") + "通行 · 山地" + (j.PassibleMountains ? "可" : "不可") + "通行"],
+      m.deal ? ["分队", teamSummary(m, m.deal) + "（回放不存分队，按游戏开局规则推算）"] : null,
       ["回放", "格式 v" + int(j.TerritorialVersion) + " · " + m.ops.length + " 条操作" + (m.incomplete ? " · 不完整（缺少时间信息）" : " · 约 " + P.fmtDuration(m.totalSec))],
       ["时间轴", m.multi ? "联机：选点阶段为负值（前 50 个 MultiTick，1 MultiTick = 7 TiTick），对局阶段 TiTick = MultiTick − 51；时间按每 TiTick 约 56ms 估算" : "单机：TiTick = MultiTick；时间按每 TiTick 约 56ms 估算"]
-    ];
+    ].filter(Boolean);
   }
 
   function downloadText(name, text) {
@@ -163,6 +190,7 @@
     box.appendChild(root);
     var tags = opts.tags || null;
     var m = model(json, !!(tags && tags.status === "incomplete"));
+    m.deal = teamDealOf(tags, json);
     var state = { kinds: {}, players: {}, kindSel: {}, playerSel: {}, hidePick: false, shown: 0, rows: [] };
     m.ops.forEach(function (op) {
       var k = kindOf(m, op);
@@ -186,10 +214,10 @@
           configRows(m, tags).map(function (r) { return "<tr><td>" + esc(r[0]) + "</td><td>" + esc(r[1]) + "</td></tr>"; }).join("") +
         "</table>" +
         '<h3 class="rv-h">玩家 <span class="rv-sub">' + players.length + ' 名有操作</span></h3>' +
-        '<div class="rv-scroll rv-players"><table class="rv-table"><thead><tr><th>编号</th><th>名字</th><th>账号</th><th>操作数</th><th>选点</th></tr></thead><tbody>' +
+        '<div class="rv-scroll rv-players"><table class="rv-table"><thead><tr><th>编号</th><th>名字</th>' + (m.deal ? "<th>队伍</th>" : "") + '<th>账号</th><th>操作数</th><th>选点</th></tr></thead><tbody>' +
           players.map(function (p) {
             var s = spawnAt[p];
-            return '<tr><td class="rv-mono">' + p + '</td><td><span class="rv-dot" data-color="' + p + '"></span>' + esc(nameOf(m, p)) + '</td><td class="rv-mono">' + esc(typeof m.accounts[p] === "string" ? m.accounts[p] : "—") + "</td><td>" + state.players[p] + '</td><td class="rv-mono">' + (s ? "(" + int(s.x) + ", " + int(s.y) + ")" : "—") + "</td></tr>";
+            return '<tr><td class="rv-mono">' + p + '</td><td><span class="rv-dot" data-color="' + p + '"></span>' + esc(nameOf(m, p)) + "</td>" + (m.deal ? "<td>" + teamBadge(m.deal.players[p]) + "</td>" : "") + '<td class="rv-mono">' + esc(typeof m.accounts[p] === "string" ? m.accounts[p] : "—") + "</td><td>" + state.players[p] + '</td><td class="rv-mono">' + (s ? "(" + int(s.x) + ", " + int(s.y) + ")" : "—") + "</td></tr>";
           }).join("") +
         "</tbody></table></div>" +
         '<h3 class="rv-h">操作时间轴</h3>' +
