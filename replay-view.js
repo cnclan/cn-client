@@ -8,7 +8,7 @@
   // host: { esc, modeLabel, mapLabel, fmtDuration, copyText, toast }; public pages use CNPages.
   var P = null;
   var STYLE_ID = "cn-rv-style";
-  var CSS = ".rv{margin-top:6px;color:#dce5ef;font-size:13px;line-height:1.5;text-align:left}.rv-h{font-size:13px;letter-spacing:3px;color:#8ff0bb;margin:22px 0 10px;font-weight:bold}.rv-sub{font-size:11px;color:#5c6b7d;letter-spacing:.5px;font-weight:normal}.rv-warn{border:1px solid rgba(255,184,107,.45);color:#ffb86b;font-size:12px;line-height:1.7;padding:10px 12px;margin-bottom:12px}.rv-actions{display:flex;gap:8px;flex-wrap:wrap}.rv-btn{border:1px solid #2a3542;background:transparent;color:#a9b8c9;font-size:12px;padding:4px 12px;cursor:pointer;letter-spacing:1px;font-family:inherit}.rv-btn:hover{border-color:#7cc8ff;color:#7cc8ff}.rv-kv{width:100%;border-collapse:collapse;margin-bottom:20px}.rv-kv td{padding:9px 6px;border-bottom:1px solid #1e2733;font-size:12px;color:#dce5ef;letter-spacing:.5px;word-break:break-all}.rv-kv td:first-child{width:90px;color:#8b9bad;letter-spacing:2px;font-size:11px;word-break:normal}.rv-mono{font-family:Consolas,\"Cascadia Mono\",monospace;color:#7cc8ff}.rv-hidden{display:none}.rv-scroll{overflow:auto;max-height:520px;border:1px solid #1e2733}.rv-players{max-height:300px}.rv-table{width:100%;border-collapse:collapse;font-size:12px}.rv-table th{position:sticky;top:0;background:#141c25;color:#8b9bad;font-weight:normal;letter-spacing:1px;text-align:left;padding:7px 8px;white-space:nowrap}.rv-table td{padding:6px 8px;border-top:1px solid #1a222c;color:#dce5ef;white-space:nowrap}.rv-dot{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;border:1px solid rgba(255,255,255,.25)}.rv-badge{font-size:11px;padding:1px 6px;border:1px solid;letter-spacing:1px}.rv-stage{font-size:11px;color:#8b9bad}.rv-stage.pick{color:#ffb86b}.rv-filters{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}.rv-filter{border:1px solid #2a3542;padding:4px 10px;font-size:12px;color:#a9b8c9;max-width:100%}.rv-filter summary{cursor:pointer;letter-spacing:1px}.rv-checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 12px;max-height:180px;overflow:auto;padding:8px 0 4px}.rv-check{font-size:12px;color:#a9b8c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.rv-check input{accent-color:#7cc8ff;vertical-align:-2px}.rv-more{display:block;margin:10px auto 0}.rv-team{display:inline-block;font-size:11px;padding:0 6px;margin-right:6px;border:1px solid;letter-spacing:1px;white-space:nowrap}";
+  var CSS = ".rv{margin-top:6px;color:#dce5ef;font-size:13px;line-height:1.5;text-align:left}.rv-h{font-size:13px;letter-spacing:3px;color:#8ff0bb;margin:22px 0 10px;font-weight:bold}.rv-sub{font-size:11px;color:#5c6b7d;letter-spacing:.5px;font-weight:normal}.rv-warn{border:1px solid rgba(255,184,107,.45);color:#ffb86b;font-size:12px;line-height:1.7;padding:10px 12px;margin-bottom:12px}.rv-actions{display:flex;gap:8px;flex-wrap:wrap}.rv-btn{border:1px solid #2a3542;background:transparent;color:#a9b8c9;font-size:12px;padding:4px 12px;cursor:pointer;letter-spacing:1px;font-family:inherit}.rv-btn:hover{border-color:#7cc8ff;color:#7cc8ff}.rv-kv{width:100%;border-collapse:collapse;margin-bottom:20px}.rv-kv td{padding:9px 6px;border-bottom:1px solid #1e2733;font-size:12px;color:#dce5ef;letter-spacing:.5px;word-break:break-all}.rv-kv td:first-child{width:90px;color:#8b9bad;letter-spacing:2px;font-size:11px;word-break:normal}.rv-mono{font-family:Consolas,\"Cascadia Mono\",monospace;color:#7cc8ff}.rv-hidden{display:none}.rv-scroll{overflow:auto;max-height:520px;border:1px solid #1e2733}.rv-players{max-height:300px}.rv-table{width:100%;border-collapse:collapse;font-size:12px}.rv-table th{position:sticky;top:0;background:#141c25;color:#8b9bad;font-weight:normal;letter-spacing:1px;text-align:left;padding:7px 8px;white-space:nowrap}.rv-table td{padding:6px 8px;border-top:1px solid #1a222c;color:#dce5ef;white-space:nowrap}.rv-dot{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;border:1px solid rgba(255,255,255,.25)}.rv-badge{font-size:11px;padding:1px 6px;border:1px solid;letter-spacing:1px}.rv-stage{font-size:11px;color:#8b9bad}.rv-stage.pick{color:#ffb86b}.rv-filters{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}.rv-filter{border:1px solid #2a3542;padding:4px 10px;font-size:12px;color:#a9b8c9;max-width:100%}.rv-filter summary{cursor:pointer;letter-spacing:1px}.rv-checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 12px;max-height:180px;overflow:auto;padding:8px 0 4px}.rv-check{font-size:12px;color:#a9b8c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.rv-check input{accent-color:#7cc8ff;vertical-align:-2px}.rv-sentinel{height:1px}.rv-swatch{display:inline-block;width:22px;height:11px;vertical-align:-1px;border:1px solid rgba(255,255,255,.3)}.rv-team{display:inline-block;font-size:11px;padding:0 6px;margin-right:6px;border:1px solid;letter-spacing:1px;white-space:nowrap}";
   var NEUTRAL = 512;
   // Team deal recomputed by the server from the game's own rule (tags.teamDeal); colour index = native team colour.
   var TEAM_NAMES = ["灰", "红", "绿", "蓝", "黄", "紫", "青", "白", "黑"];
@@ -70,6 +70,18 @@
     if (Array.isArray(c) && c.length === 3) return "rgb(" + c.map(function (x) { return Math.round(Math.min(63, Math.max(0, int(x))) * 255 / 63); }).join(",") + ")";
     return FALLBACK_COLORS[p % FALLBACK_COLORS.length];
   }
+  // tt 2026-10-26: in team games the territory colour is the team colour, so dots follow the deal.
+  function dotColor(m, p) {
+    var c = m.deal ? m.deal.players[p] : -1;
+    return c >= 0 && c <= 8 ? "rgb(" + TEAM_RGB[c] + ")" : colorOf(m, p);
+  }
+  function dotHtml(m, p) {
+    var c = m.deal ? m.deal.players[p] : -1, team = c >= 0 && c <= 8;
+    return '<span class="rv-dot" data-color="' + int(p) + '"' + (team ? ' data-team="' + c + '" title="' + TEAM_NAMES[c] + (c === 0 ? "（人机）" : "队") + '"' : "") + "></span>";
+  }
+  function paintDots(scope, m) {
+    scope.querySelectorAll(".rv-dot[data-color]").forEach(function (dot) { dot.style.background = dotColor(m, int(dot.getAttribute("data-color"))); });
+  }
   function nameOf(m, p) {
     if (p === NEUTRAL) return "中立地区";
     var n = m.names[p];
@@ -110,24 +122,26 @@
       default: return { key: "99", label: "未知操作", color: "#475569" };
     }
   }
+  // Returns HTML: every text part is escaped; target players get the same colour dot as the player column.
   function detailOf(m, op) {
     var d = op.d, at = function (x, y) { return "(" + int(x) + ", " + int(y) + ")"; };
-    var join = function (a) { return a.join(" • "); };
+    var join = function (a) { return a.map(function (x) { return x && x.html !== undefined ? x.html : esc(x); }).join(" • "); };
+    var target = function (p) { p = int(p); return { html: (p === NEUTRAL ? "" : dotHtml(m, p)) + esc(targetName(m, p, op.raw)) }; };
     switch (op.type) {
       case "spawn": return join(["选点坐标", at(d.x, d.y)]);
-      case "attack": return join([rate(d.rate), targetName(m, d.defender, op.raw)]);
-      case "donate": return join([rate(d.rate), targetName(m, d.receiver, op.raw)]);
+      case "attack": return join([rate(d.rate), target(d.defender)]);
+      case "donate": return join([rate(d.rate), target(d.receiver)]);
       case "ship": return join([rate(d.rate), at(d.target_x, d.target_y), "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
       case "recall": return join(["船 " + int(d.id), "召回"]);
       case "intercept": return join([rate(d.rate), "船 " + int(d.target_id)]);
       case "call": return join(["和平投票", "发起"]);
-      case "withdraw": return join(["撤销进攻", targetName(m, d.target, op.raw)]);
+      case "withdraw": return join(["撤销进攻", target(d.target)]);
       case "emoji": return join(["发送表情", emojiOf(d.emoji_id)]);
       case "peace": return join(["和平投票", d.agreement ? "赞成" : "反对"]);
       case "surrender": return join(["退出对局", "投降"]);
       case "left": return join(["退出对局", "离开"]);
-      case "dig": return join([rate(d.rate), targetName(m, d.defender, op.raw), at(d.target_x, d.target_y)]);
-      default: return "未知操作";
+      case "dig": return join([rate(d.rate), target(d.defender), at(d.target_x, d.target_y)]);
+      default: return esc("未知操作");
     }
   }
 
@@ -137,10 +151,6 @@
     if (!d || !Array.isArray(d.players) || d.players.length !== int(json.PlayerCount) || !(int(d.teams) >= 2 && int(d.teams) <= 8)) return null;
     for (var i = 0; i < d.players.length; i++) if (!(d.players[i] === int(d.players[i]) && d.players[i] >= 0 && d.players[i] <= 8)) return null;
     return d;
-  }
-  function teamBadge(c) {
-    if (!(c >= 0 && c <= 8)) return "—";
-    return '<span class="rv-team" style="color:rgb(' + TEAM_RGB[c] + ');border-color:rgba(' + TEAM_RGB[c] + ',.55)">' + TEAM_NAMES[c] + (c === 0 ? "（人机）" : "队") + "</span>";
   }
   // Humans per team colour, in the order teams appear; bots are noted separately.
   function teamSummary(m, deal) {
@@ -214,10 +224,10 @@
           configRows(m, tags).map(function (r) { return "<tr><td>" + esc(r[0]) + "</td><td>" + esc(r[1]) + "</td></tr>"; }).join("") +
         "</table>" +
         '<h3 class="rv-h">玩家 <span class="rv-sub">' + players.length + ' 名有操作</span></h3>' +
-        '<div class="rv-scroll rv-players"><table class="rv-table"><thead><tr><th>编号</th><th>名字</th>' + (m.deal ? "<th>队伍</th>" : "") + '<th>账号</th><th>操作数</th><th>选点</th></tr></thead><tbody>' +
+        '<div class="rv-scroll rv-players"><table class="rv-table"><thead><tr><th>编号</th><th>名字</th>' + (m.deal ? "<th>颜色</th>" : "") + '<th>账号</th><th>操作数</th><th>选点</th></tr></thead><tbody>' +
           players.map(function (p) {
             var s = spawnAt[p];
-            return '<tr><td class="rv-mono">' + p + '</td><td><span class="rv-dot" data-color="' + p + '"></span>' + esc(nameOf(m, p)) + "</td>" + (m.deal ? "<td>" + teamBadge(m.deal.players[p]) + "</td>" : "") + '<td class="rv-mono">' + esc(typeof m.accounts[p] === "string" ? m.accounts[p] : "—") + "</td><td>" + state.players[p] + '</td><td class="rv-mono">' + (s ? "(" + int(s.x) + ", " + int(s.y) + ")" : "—") + "</td></tr>";
+            return '<tr><td class="rv-mono">' + p + "</td><td>" + dotHtml(m, p) + esc(nameOf(m, p)) + "</td>" + (m.deal ? '<td><span class="rv-swatch" data-own="' + p + '"></span></td>' : "") + '<td class="rv-mono">' + esc(typeof m.accounts[p] === "string" ? m.accounts[p] : "—") + "</td><td>" + state.players[p] + '</td><td class="rv-mono">' + (s ? "(" + int(s.x) + ", " + int(s.y) + ")" : "—") + "</td></tr>";
           }).join("") +
         "</tbody></table></div>" +
         '<h3 class="rv-h">操作时间轴</h3>' +
@@ -227,11 +237,11 @@
           (m.multi && !m.incomplete ? '<label class="rv-check"><input type="checkbox" data-rv="hide-pick"> 隐藏选点阶段</label>' : "") +
           '<span class="rv-sub" data-rv="info"></span>' +
         "</div>" +
-        '<div class="rv-scroll"><table class="rv-table rv-ops"><thead><tr><th>TiTick</th><th>时间</th><th>阶段</th><th>玩家</th><th>类型</th><th>详情</th></tr></thead><tbody data-rv="ops"></tbody></table></div>' +
-        '<button type="button" class="rv-btn rv-more rv-hidden" data-rv="more">加载更多</button>' +
+        '<div class="rv-scroll" data-rv="ops-scroll"><table class="rv-table rv-ops"><thead><tr><th>TiTick</th><th>时间</th><th>阶段</th><th>玩家</th><th>类型</th><th>详情</th></tr></thead><tbody data-rv="ops"></tbody></table><div class="rv-sentinel" data-rv="sentinel"></div></div>' +
       "</div>";
     var q = function (name) { return root.querySelector('[data-rv="' + name + '"]'); };
-    root.querySelectorAll(".rv-dot[data-color]").forEach(function (dot) { dot.style.background = colorOf(m, int(dot.getAttribute("data-color"))); });
+    paintDots(root, m);
+    root.querySelectorAll(".rv-swatch[data-own]").forEach(function (sw) { var p = int(sw.getAttribute("data-own")); sw.style.background = colorOf(m, p); sw.title = colorOf(m, p); });
 
     var kindKeys = Object.keys(state.kinds);
     q("kinds").innerHTML = kindKeys.map(function (key) {
@@ -239,7 +249,7 @@
       return '<label class="rv-check"><input type="checkbox" data-k="' + esc(key) + '"> ' + esc(k.k.label) + ' <span class="rv-sub">(' + k.n + ")</span></label>";
     }).join("");
     q("players").innerHTML = players.map(function (p) {
-      return '<label class="rv-check"><input type="checkbox" data-p="' + p + '"> #' + p + " " + esc(nameOf(m, p)) + ' <span class="rv-sub">(' + state.players[p] + ")</span></label>";
+      return '<label class="rv-check"><input type="checkbox" data-p="' + p + '"> ' + dotHtml(m, p) + "#" + p + " " + esc(nameOf(m, p)) + ' <span class="rv-sub">(' + state.players[p] + ")</span></label>";
     }).join("");
 
     function apply() {
@@ -261,18 +271,23 @@
         var tr = document.createElement("tr");
         tr.innerHTML = '<td class="rv-mono">' + (op.t === null ? "?" : op.t) + '</td><td class="rv-mono">' + mmss(op.t) + "</td>" +
           '<td><span class="rv-stage' + (op.pick ? " pick" : "") + '">' + (op.t === null ? "未知" : op.pick ? "选点" : "对局") + "</span></td>" +
-          '<td><span class="rv-dot"></span>#' + op.player + " " + esc(nameOf(m, op.player)) + "</td>" +
-          '<td><span class="rv-badge">' + esc(op.kind.label) + "</span></td><td>" + esc(detailOf(m, op)) + "</td>";
-        tr.querySelector(".rv-dot").style.background = colorOf(m, op.player);
+          "<td>" + dotHtml(m, op.player) + "#" + op.player + " " + esc(nameOf(m, op.player)) + "</td>" +
+          '<td><span class="rv-badge">' + esc(op.kind.label) + "</span></td><td>" + detailOf(m, op) + "</td>";
+        paintDots(tr, m);
         var badge = tr.querySelector(".rv-badge");
         badge.style.color = op.kind.color; badge.style.borderColor = op.kind.color;
         frag.appendChild(tr);
       });
       q("ops").appendChild(frag);
       state.shown = Math.min(state.rows.length, state.shown + PAGE);
-      q("info").textContent = "共 " + state.rows.length + " 条，已显示 " + state.shown + " 条";
-      q("more").classList.toggle("rv-hidden", state.shown >= state.rows.length);
+      q("info").textContent = "共 " + state.rows.length + " 条" + (state.shown < state.rows.length ? "，已显示 " + state.shown + " 条（向下滚动自动加载）" : "");
     }
+    // Load the next page when the end of the timeline scrolls into view (inside its own scroll box).
+    if (typeof IntersectionObserver === "function") {
+      new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; }) && state.shown < state.rows.length) more();
+      }, { root: q("ops-scroll"), rootMargin: "0px 0px 300px 0px" }).observe(q("sentinel"));
+    } else PAGE = Infinity;
     root.addEventListener("change", function (e) {
       var t = e.target;
       if (t.hasAttribute("data-k")) { if (t.checked) state.kindSel[t.getAttribute("data-k")] = true; else delete state.kindSel[t.getAttribute("data-k")]; apply(); }
@@ -284,8 +299,7 @@
       if (!b || b.tagName !== "BUTTON") return;
       var action = b.getAttribute("data-rv");
       var text = function () { return JSON.stringify(json, null, 2); };
-      if (action === "more") more();
-      else if (action === "export") downloadText(opts.fileName || "replay.json", text());
+      if (action === "export") downloadText(opts.fileName || "replay.json", text());
       else if (action === "copy-json") host.copyText(text()).then(function () { host.toast("JSON 已复制"); }, function (err) { host.toast(err.message || String(err), true); });
       else if (action === "watch") {
         // tt: 复制回放代码并打开官方对应版本的回放页。

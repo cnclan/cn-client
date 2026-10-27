@@ -374,7 +374,7 @@
 .cn-speed-preset-hint { color:var(--cn-muted); font-size:12px; line-height:1.5; }
 .cn-term-speed-editor select { display:block; width:100%; margin-top:6px; }
 .cn-term-cta { padding:6px 12px !important; }
-.cn-term-open-team { align-self:flex-start; width:auto !important; min-height:30px !important; padding:6px 14px !important; font-size:13px !important; }
+.cn-term-open-team { align-self:flex-start; width:auto !important; height:auto !important; min-height:32px !important; padding:6px 16px !important; font-size:13px !important; letter-spacing:2px !important; }
 .cn-term-speed-editor .cn-speed-save { background:var(--cn-accent); color:var(--cn-ok-fg); }
 @media (hover:none) { .cn-term-tool button,.cn-term-teamnav button,.cn-term-more,.cn-term-section-head button,.cn-term-speed-editor button { min-height:44px; } }
 
@@ -725,6 +725,9 @@
 }
 .cn-term-room {
   display: flex;
+  /* 按钮默认按内容收缩：手机上各行宽度不一、时间不对齐（tt 2026-10-26 图9），统一占满整行 */
+  width: 100%;
+  box-sizing: border-box;
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
@@ -1260,13 +1263,20 @@
 .cn-term-tool[aria-label="管理员指挥"]{flex-wrap:wrap}
 #cn-term-control-status{flex-basis:100%;margin-top:6px;font-size:12px;overflow-wrap:anywhere;color:var(--cn-accent)}
 #cn-control-banner.cn-control-error span{color:var(--cn-danger)}
-.cn-term-naval-settings{padding:10px;border:1px solid #354956;color:#7cc8ff}
+.cn-term-naval-settings{padding:6px 10px;border:1px solid var(--cn-border);background:var(--cn-panel-2);color:var(--cn-accent);font:12px var(--cn-font)}
 .cn-term-naval-settings[hidden]{display:none}
-.cn-term-naval-settings label{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
-.cn-term-naval-settings label span{flex:1;min-width:120px}
-.cn-term-naval-settings input[type="range"]{width:120px;min-height:44px;accent-color:#7cc8ff}
-.cn-term-naval-settings output{min-width:36px;text-align:right}
-.cn-term-naval-settings button{min-height:44px}
+/* 字号/控件全部显式给定：手机上游戏全局样式会把 label 放大、复选框与按钮显示成浏览器原生白底（tt 2026-10-26 图10） */
+.cn-term-naval-settings label{display:flex;align-items:center;gap:8px;margin:0;min-height:36px;font:12px var(--cn-font);color:var(--cn-accent);cursor:pointer}
+.cn-term-naval-settings label span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cn-term-naval-settings input[type="range"]{flex:0 1 120px;width:120px;min-width:72px;height:24px;margin:0;accent-color:var(--cn-accent)}
+.cn-term-naval-settings output{min-width:36px;text-align:right;color:var(--cn-text)}
+.cn-term-naval-settings input[type="checkbox"]{appearance:none;-webkit-appearance:none;flex:none;width:18px;height:18px;margin:0 2px;border:1px solid var(--cn-border);background:var(--cn-surface);border-radius:0;display:grid;place-content:center;cursor:pointer}
+.cn-term-naval-settings input[type="checkbox"]::after{content:"";width:5px;height:9px;border:solid var(--cn-ok-fg);border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg);visibility:hidden}
+.cn-term-naval-settings input[type="checkbox"]:checked{background:var(--cn-accent);border-color:var(--cn-accent)}
+.cn-term-naval-settings input[type="checkbox"]:checked::after{visibility:visible}
+.cn-term-naval-settings input[type="checkbox"]:focus-visible{outline:1px solid var(--cn-accent);outline-offset:2px}
+.cn-term-naval-settings button{display:block;margin:6px 0 2px auto;min-height:32px;padding:6px 14px;background:var(--cn-panel);border:1px solid var(--cn-border);border-radius:0;color:var(--cn-accent);font:12px var(--cn-font);cursor:pointer}
+@media (hover:none){.cn-term-naval-settings label{min-height:44px}.cn-term-naval-settings button{min-height:44px}}
 /* 练习偏差三色（消息与报告共用，CN 色系）：绿=完美 黄=小偏差 红=偏差较大 */
 .cn-practice-good{color:#8ce8b9;font-weight:600}
 .cn-practice-warn{color:#ffb86b;font-weight:600}
