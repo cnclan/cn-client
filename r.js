@@ -47,6 +47,8 @@
         '<div class="cn-tip">复制后打开游戏：菜单 → 重播 → 粘贴 → 启动</div>' +
         '<div class="cn-btn-row">' +
           (parseable ? '<button type="button" class="chip" id="cn-parse-btn">解析对局</button>' : '<span class="cn-card-sub">' + (tags && tags.status === "custom-map" ? "自定义地图回放暂不支持解析" : "这条回放无法解析") + '</span>') +
+          '<button type="button" class="chip" id="cn-like-btn">♡ <span id="cn-like-n">' + (item.likes | 0) + '</span></button>' +
+          '<button type="button" class="chip hidden" id="cn-admin-feat"></button>' +
           '<button type="button" class="cn-btn-danger hidden" id="cn-admin-del">删除（管理员）</button>' +
         '</div>' +
         '<div class="cn-parse hidden" id="cn-parse"></div>' +
@@ -55,6 +57,23 @@
     var parseBtn = document.getElementById("cn-parse-btn");
     if (parseBtn) parseBtn.onclick = doParse;
     showAdminDelete();
+    setupLike();
+  }
+
+  // Like: one per account (login required). The page opens with the heart already filled if this account liked it.
+  async function setupLike() {
+    var btn = document.getElementById("cn-like-btn"), n = document.getElementById("cn-like-n");
+    if (!btn) return;
+    var on = false;
+    var paint = function () { btn.classList.toggle("on", on); btn.firstChild.nodeValue = on ? "♥ " : "♡ "; btn.setAttribute("aria-pressed", String(on)); };
+    if (P.savedToken()) { try { var d = await P.apiSend("GET", "/replays/liked"); on = (d.ids || []).indexOf(id) >= 0; paint(); } catch (_) {} }
+    btn.onclick = async function () {
+      if (!P.savedToken()) { P.toast("登录后才能点赞：先在登录页登录，再回到这里", true); return; }
+      btn.disabled = true;
+      try { var r = await P.apiSend("POST", "/replays/" + id + "/like", { liked: !on }); on = !!r.liked; n.textContent = String(r.likes | 0); paint(); }
+      catch (e) { P.toast(e.status === 401 ? "登录已失效，请重新登录后再点赞" : (e.message || String(e)), true); }
+      finally { btn.disabled = false; }
+    };
   }
 
   async function doCopy() {
@@ -102,6 +121,17 @@
       var me = await P.apiSend("GET", "/auth/me");
       if (!me || !me.user || me.user.role !== "admin") return;
     } catch (_) { return; }
+    var feat = document.getElementById("cn-admin-feat");
+    if (feat) {
+      var paintFeat = function () { feat.textContent = item.featured ? "取消精华（管理员）" : "设为精华（管理员）"; };
+      paintFeat();feat.classList.remove("hidden");
+      feat.onclick = async function () {
+        feat.disabled = true;
+        try { var r = await P.apiSend("POST", "/replays/" + id + "/feature", { featured: !item.featured }); item.featured = !!r.featured; paintFeat(); P.toast(item.featured ? "已设为精华" : "已取消精华"); }
+        catch (e) { P.toast(e.message || String(e), true); }
+        finally { feat.disabled = false; }
+      };
+    }
     var btn = document.getElementById("cn-admin-del");
     if (!btn) return;
     btn.classList.remove("hidden");

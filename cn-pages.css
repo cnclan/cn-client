@@ -104,3 +104,10 @@ body{font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;
   .nav a{margin-left:10px;font-size:11px;}
   .cn-detail{padding:16px 14px 20px;}
 }
+.cn-card-actions{display:flex;align-items:center;gap:8px;flex:none;}
+.cn-like{background:transparent;border:1px solid #2a3542;color:#a9b8c9;font-size:12px;padding:5px 10px;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:border-color .15s,color .15s;}
+.cn-like:hover{border-color:#ff7d6b;color:#ff9a8c;}
+.cn-like.on{border-color:#ff7d6b;color:#ff7d6b;}
+.cn-like:disabled{opacity:.5;cursor:wait;}
+.cn-badge-feat{color:#e8d86b;border-color:#e8d86b;}
+#cn-like-btn.on{border-color:#ff7d6b;color:#ff7d6b;}

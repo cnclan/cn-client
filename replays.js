@@ -3,7 +3,8 @@
 (function () {
   "use strict";
   var P = window.CNPages;
-  var state = { mode: "", map: "", q: "", sort: "created", next: null, loading: false, done: false, total: 0 };
+  var state = { mode: "", map: "", q: "", sort: "created", featured: false, ready: false, next: null, loading: false, done: false, total: 0 };
+  var liked = {};   // ids this account liked (loaded once when a login is saved)
   var listEl = document.getElementById("cn-list");
   var emptyEl = document.getElementById("cn-empty");
   var errEl = document.getElementById("cn-error");
@@ -42,11 +43,20 @@
     var sortBox = document.getElementById("cn-sort-chips");
     sortBox.appendChild(chip("最新", state.sort === "created", function () { setSort("created"); }));
     sortBox.appendChild(chip("最热", state.sort === "views", function () { setSort("views"); }));
+    sortBox.appendChild(chip("点赞最多", state.sort === "likes", function () { setSort("likes"); }));
+    var feat = chip("只看精华", state.featured, function () { state.featured = !state.featured; feat.classList.toggle("on", state.featured); resetAndLoad(); });
+    sortBox.appendChild(feat);
   }
 
   function setMode(k) { if (state.mode === k) return; state.mode = k; resetAndLoad(); }
   function setMap(k) { if (state.map === k) return; state.map = k; resetAndLoad(); }
-  function setSort(k) { if (state.sort === k) return; state.sort = k; resetAndLoad(); }
+  function setSort(k) {
+    if (state.sort === k) return;
+    state.sort = k;
+    var chips = document.getElementById("cn-sort-chips").children, names = { created: "最新", views: "最热", likes: "点赞最多" };
+    for (var i = 0; i < chips.length; i++) if (names[k] && /^(最新|最热|点赞最多)$/.test(chips[i].textContent)) chips[i].classList.toggle("on", chips[i].textContent === names[k]);
+    resetAndLoad();
+  }
 
   function resetAndLoad() {
     state.next = null;
@@ -85,13 +95,19 @@
     if (countEl) countEl.textContent = state.total ? "已载入 " + state.total + " 条" : "";
   }
 
+  function likeButton(r) {
+    var on = !!liked[r.id];
+    return '<button type="button" class="cn-like' + (on ? " on" : "") + '" data-like="' + P.esc(r.id) + '" aria-pressed="' + on + '" title="' + (on ? "取消点赞" : "点赞") + '">' + (on ? "♥" : "♡") + ' <span class="cn-like-n">' + (r.likes | 0) + '</span></button>';
+  }
+
   function card(r) {
     return '<div class="cn-card">' +
       '<div class="cn-card-head">' +
         '<a class="cn-card-name" href="' + P.esc(P.linkTo(r.id)) + '">' + P.esc(r.name || "未命名回放") + '</a>' +
-        '<button type="button" class="cn-btn-copy" data-copy="' + P.esc(r.id) + '">复制回放</button>' +
+        '<span class="cn-card-actions">' + likeButton(r) + '<button type="button" class="cn-btn-copy" data-copy="' + P.esc(r.id) + '">复制回放</button></span>' +
       '</div>' +
       '<div class="cn-card-meta">' +
+        (r.featured ? '<span class="cn-badge cn-badge-feat">精华</span>' : "") +
         '<span class="cn-badge cn-badge-mode">' + P.esc(P.modeLabel(r.mode)) + '</span>' +
         '<span class="cn-badge cn-badge-map">' + P.esc(P.mapLabel(r.map)) + '</span>' +
         P.tagFacts(r.tags).map(function (f) { return '<span class="cn-card-sub' + (f === "回放不完整" || f === "无法解析" ? " cn-card-warn" : "") + '">' + P.esc(f) + '</span>'; }).join("") +
@@ -114,7 +130,9 @@
   }
 
   async function load() {
-    if (state.loading || state.done) return;
+    // Wait for the liked list: the scroll sentinel fires load() at page start, before it arrives, and the first
+    // cards would render with empty hearts.
+    if (!state.ready || state.loading || state.done) return;
     state.loading = true;
     showLoading();
     try {
@@ -123,6 +141,7 @@
         map: state.map,
         q: state.q,
         sort: state.sort,
+        featured: state.featured ? "1" : "",
         before: state.next,
         limit: LIMIT
       });
@@ -181,6 +200,8 @@
   };
 
   listEl.addEventListener("click", async function (e) {
+    var likeBtn = e.target && e.target.closest ? e.target.closest("[data-like]") : null;
+    if (likeBtn) { toggleLike(likeBtn); return; }
     var btn = e.target && e.target.closest ? e.target.closest("[data-copy]") : null;
     if (!btn) return;
     var id = btn.getAttribute("data-copy");
@@ -204,6 +225,29 @@
     }
   });
 
+  async function toggleLike(btn) {
+    if (!P.savedToken()) { P.toast("登录后才能点赞：先在登录页登录，再回到回放大厅", true); return; }
+    var id = btn.getAttribute("data-like");
+    btn.disabled = true;
+    try {
+      var d = await P.apiSend("POST", "/replays/" + id + "/like", { liked: !liked[id] });
+      if (d.liked) liked[id] = true; else delete liked[id];
+      btn.classList.toggle("on", !!d.liked);
+      btn.setAttribute("aria-pressed", String(!!d.liked));
+      btn.firstChild.nodeValue = d.liked ? "♥ " : "♡ ";
+      btn.querySelector(".cn-like-n").textContent = String(d.likes | 0);
+    } catch (err) {
+      P.toast(err.status === 401 ? "登录已失效，请重新登录后再点赞" : (err.message || String(err)), true);
+    } finally { btn.disabled = false; }
+  }
+
+  // Which replays this account already liked: loaded before the first list so the hearts render filled.
+  async function loadLiked() {
+    if (!P.savedToken()) return;
+    try { var d = await P.apiSend("GET", "/replays/liked"); (d.ids || []).forEach(function (i) { liked[i] = true; }); }
+    catch (e) { console.warn("[CN pages][WARN] 读取点赞记录失败：" + (e.message || e)); }
+  }
+
   renderChips();
-  load();
+  loadLiked().then(function () { state.ready = true; load(); });
 })();

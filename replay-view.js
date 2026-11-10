@@ -15,7 +15,7 @@
   // The game's own readable team text colours (bo.bq), not the raw territory colours.
   var TEAM_RGB = ["210,200,200", "255,120,120", "0,230,0", "150,150,255", "240,240,25", "255,70,255", "25,240,240", "255,255,255", "170,170,170"];
   // Spawn phase length follows the game (<=2 players 30, <=50 players 40, else 50); same rule as replay-codec.
-  var spawnSpan = function (players) { return players <= 2 ? 30 : players <= 50 ? 40 : 50; }, MULTI_PER_TICK = 7, MS_PER_TICK = 56, PAGE = 400;
+  var spawnSpan = function (humans) { return humans <= 2 ? 30 : humans <= 50 ? 40 : 50; }, MULTI_PER_TICK = 7, MS_PER_TICK = 56, PAGE = 400;
   var EMOJIS = ["\u{1F970}","\u{1F60E}","\u{1F618}","\u{1F61C}","\u{1F917}","\u{1F973}","\u{1F607}","\u{1F60A}","\u{1F971}","\u{1F644}","\u{1F914}","\u{1F97A}","\u{1F621}","\u{1F62D}","\u{1F631}","\u{1F61E}","\u{1F480}","\u{1F479}","\u{1F44B}","\u{1F64F}","\u{1F44F}","\u{1F4AA}","\u{1F64B}‍♂️","\u{1F926}‍♂️","⬆️","➡️","⬇️","⬅️","\u{1F440}","❤️","\u{1F494}","\u{1F4A5}","\u{1F525}","\u{1FAA6}","\u{1F947}","\u{1F948}","\u{1F949}","\u{1F396}️","\u{1F3C5}","\u{1F451}","\u{1F389}","\u{1F4AF}","✝️","☪️","\u{1F549}️","☸️","✡️","☦️","⚛️"];
   var EMOJIS_CUSTOM = ["⚔️","⛵️","\u{1F4B0}","\u{1F91D}","⚖️","✌️","\u{1F54A}️","\u{1F6E1}️","\u{1F3F3}️","\u{1F44D}","\u{1F44E}","\u{1F198}","✊"];
   var FALLBACK_COLORS = ["#60a5fa","#f87171","#4ade80","#fbbf24","#a78bfa","#f472b6","#22d3ee","#fb923c","#a3e635","#e879f9","#38bdf8","#fca5a5"];
@@ -41,7 +41,7 @@
 
   // Build a view model from the replay JSON. incomplete = timing unknown (truncated).
   function model(json, incomplete) {
-    var humans = int(json.HumanCount), multi = humans > 1, span = spawnSpan(int(json.PlayerCount)), base = multi ? span + 1 : 0;
+    var humans = int(json.HumanCount), multi = humans > 1, span = spawnSpan(humans), base = multi ? span + 1 : 0;
     var names = Array.isArray(json.PlayerNames) ? json.PlayerNames : [];
     var colors = Array.isArray(json.PlayerColors_RGB666) ? json.PlayerColors_RGB666 : [];
     var accounts = Array.isArray(json.AccountNames) ? json.AccountNames : [];
