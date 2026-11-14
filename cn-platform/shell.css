@@ -349,6 +349,7 @@
 .cn-practice-fill { height:100%; background:linear-gradient(90deg,var(--cn-green),var(--cn-accent)); transition:width .05s linear; }
 .cn-practice-markers i { position:absolute; top:0; height:100%; width:3px; background:var(--cn-accent); transform:translateX(-50%); }
 .cn-practice-markers i.passed { opacity:.25; }
+.cn-practice-markers i.cancel { background:transparent; border-left:2px dashed var(--cn-muted, #9aa7b4); width:0; }
 .cn-practice-triangle-row { position:relative; height:9px; margin:2px 0; }
 .cn-practice-triangle-row i { position:absolute; border-left:4px solid transparent; border-right:4px solid transparent; border-bottom:8px solid var(--cn-danger); transform:translateX(-50%); }
 #cn-practice-tick, #cn-practice-next { font-variant-numeric:tabular-nums; margin-top:4px; }
@@ -1292,6 +1293,7 @@
 #cn-practice-report-dialog td{padding:7px 4px;border-bottom:1px solid #283642;text-align:center}
 .cn-practice-report-line{position:relative;height:14px;background:#1b2933;margin:5px 0}
 .cn-practice-report-line i{position:absolute;top:2px;height:10px;width:2px;background:#7ecaff;transform:translateX(-50%)}
+.cn-practice-report-line i.cancel{background:transparent;border-left:2px dashed #9aa7b4;width:0}
 .cn-practice-report-line b{position:absolute;top:4px;width:6px;height:6px;border-radius:50%;background:#8ce8b9;transform:translateX(-50%)}
 .cn-practice-report-line b.cn-practice-warn{background:#ffb86b}.cn-practice-report-line b.cn-practice-bad{background:#ff7d6b}.cn-practice-report-line b.cn-practice-na{background:#9fb0bd}
 .cn-term-control-delegated{flex-wrap:wrap}

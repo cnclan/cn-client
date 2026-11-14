@@ -41,7 +41,8 @@
 
   // Build a view model from the replay JSON. incomplete = timing unknown (truncated).
   function model(json, incomplete) {
-    var humans = int(json.HumanCount), multi = humans > 1, span = spawnSpan(humans), base = multi ? span + 1 : 0;
+    // No spawn phase (SelectableSpawn false: 100+ humans in a battle royale) = no spawn ticks; same rule as replay-codec.spawnBase.
+    var humans = int(json.HumanCount), multi = humans > 1, phase = multi && json.SelectableSpawn !== false && json.SelectableSpawn !== 0, span = spawnSpan(humans), base = phase ? span + 1 : 0;
     var names = Array.isArray(json.PlayerNames) ? json.PlayerNames : [];
     var colors = Array.isArray(json.PlayerColors_RGB666) ? json.PlayerColors_RGB666 : [];
     var accounts = Array.isArray(json.AccountNames) ? json.AccountNames : [];
@@ -53,7 +54,7 @@
       var raw = o.MultiTick !== undefined && o.MultiTick !== null ? int(o.MultiTick) : int(o.TiTick) + base;
       var t = null, pick = false;
       if (!incomplete) {
-        pick = multi && raw <= span;
+        pick = phase && raw <= span;
         t = pick ? (raw - span) * MULTI_PER_TICK : raw - base;
       }
       return { i: i, type: String(o.Type || "unknown"), player: int(o.PlayerIndex), d: o.data && typeof o.data === "object" ? o.data : {}, raw: raw, t: t, pick: pick };
@@ -63,7 +64,7 @@
     var last = 0;
     ops.forEach(function (op) { if (op.t !== null && op.t > last) last = op.t; });
     if (endLabel && !incomplete) last = Math.max(last, int(endLabel.Moment));
-    return { json: json, humans: humans, multi: multi, names: names, colors: colors, accounts: accounts, ops: ops, deadAt: deadAt, incomplete: incomplete, totalSec: last * MS_PER_TICK / 1000 };
+    return { json: json, humans: humans, multi: multi, phase: phase, span: span, names: names, colors: colors, accounts: accounts, ops: ops, deadAt: deadAt, incomplete: incomplete, totalSec: last * MS_PER_TICK / 1000 };
   }
 
   function colorOf(m, p) {
@@ -172,7 +173,7 @@
       ["地形", "水面" + (j.PassibleWater ? "可" : "不可") + "通行 · 山地" + (j.PassibleMountains ? "可" : "不可") + "通行"],
       m.deal ? ["分队", teamSummary(m, m.deal) + "（回放不存分队，按游戏开局规则推算）"] : null,
       ["回放", "格式 v" + int(j.TerritorialVersion) + " · " + m.ops.length + " 条操作" + (m.incomplete ? " · 不完整（缺少时间信息）" : " · 约 " + P.fmtDuration(m.totalSec))],
-      ["时间轴", m.multi ? "联机：选点阶段为负值（前 50 个 MultiTick，1 MultiTick = 7 TiTick），对局阶段 TiTick = MultiTick − 51；时间按每 TiTick 约 56ms 估算" : "单机：TiTick = MultiTick；时间按每 TiTick 约 56ms 估算"]
+      ["时间轴", m.phase ? "联机：选点阶段为负值（前 " + m.span + " 个 MultiTick，1 MultiTick = 7 TiTick），对局阶段 TiTick = MultiTick − " + (m.span + 1) + "；时间按每 TiTick 约 56ms 估算" : m.multi ? "联机（100 人以上大逃杀没有选点阶段，系统自动分配出生点）：TiTick = MultiTick；时间按每 TiTick 约 56ms 估算" : "单机：TiTick = MultiTick；时间按每 TiTick 约 56ms 估算"]
     ].filter(Boolean);
   }
 
@@ -235,7 +236,7 @@
         '<div class="rv-filters">' +
           '<details class="rv-filter"><summary>类型：<span data-rv="kind-sum">全部</span></summary><div class="rv-checks" data-rv="kinds"></div></details>' +
           '<details class="rv-filter"><summary>玩家：<span data-rv="player-sum">全部</span></summary><div class="rv-checks" data-rv="players"></div></details>' +
-          (m.multi && !m.incomplete ? '<label class="rv-check"><input type="checkbox" data-rv="hide-pick"> 隐藏选点阶段</label>' : "") +
+          (m.phase && !m.incomplete ? '<label class="rv-check"><input type="checkbox" data-rv="hide-pick"> 隐藏选点阶段</label>' : "") +
           '<span class="rv-sub" data-rv="info"></span>' +
         "</div>" +
         '<div class="rv-scroll" data-rv="ops-scroll"><table class="rv-table rv-ops"><thead><tr><th>TiTick</th><th>时间</th><th>阶段</th><th>玩家</th><th>类型</th><th>详情</th></tr></thead><tbody data-rv="ops"></tbody></table><div class="rv-sentinel" data-rv="sentinel"></div></div>' +
