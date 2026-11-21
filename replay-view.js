@@ -120,6 +120,7 @@
       case "emoji": return { key: "6", label: "发送表情", color: "#f472b6" };
       case "surrender": return { key: "8", label: "投降退出", color: "#64748b" };
       case "left": return { key: "9", label: "离开对局", color: "#64748b" };
+      case "redirect": return { key: "11", label: "改船航线", color: "#22d3ee" };
       case "dig": return int(d.defender) === NEUTRAL ? { key: "10N", label: "进攻空地", color: "#fbbf24" } : { key: "10P", label: "指定进攻", color: "#fb923c" };
       default: return { key: "99", label: "未知操作", color: "#475569" };
     }
@@ -134,6 +135,7 @@
       case "attack": return join([rate(d.rate), target(d.defender)]);
       case "donate": return join([rate(d.rate), target(d.receiver)]);
       case "ship": return join([rate(d.rate), at(d.target_x, d.target_y), "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
+      case "redirect": return join(["船 " + int(d.id), "改航至 " + at(d.target_x, d.target_y), "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
       case "recall": return join(["船 " + int(d.id), "召回"]);
       case "intercept": return join([rate(d.rate), "船 " + int(d.target_id)]);
       case "call": return join(["和平投票", "发起"]);
