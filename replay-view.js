@@ -115,6 +115,7 @@
       case "ship": return { key: "3", label: "发射船只", color: "#38bdf8" };
       case "recall": return { key: "4R", label: "召回船只", color: "#a78bfa" };
       case "intercept": return { key: "4I", label: "拦截船只", color: "#fbbf24" };
+      case "reallocate": return { key: "4A", label: "改船只分配比例", color: "#fbbf24" };
       case "call": case "peace": return { key: "PEACE", label: "和平投票", color: "#34d399" };
       case "withdraw": return { key: "5W", label: "撤销进攻", color: "#94a3b8" };
       case "emoji": return { key: "6", label: "发送表情", color: "#f472b6" };
@@ -135,9 +136,10 @@
       case "attack": return join([rate(d.rate), target(d.defender)]);
       case "donate": return join([rate(d.rate), target(d.receiver)]);
       case "ship": return join([rate(d.rate), at(d.target_x, d.target_y), "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
-      case "redirect": return join(["船 " + int(d.id), "改航至 " + at(d.target_x, d.target_y), "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
+      case "redirect": return join(["船 " + int(d.id), "改航至 " + at(d.target_x, d.target_y), int(d.direction) === 7 ? "不登陆（终点在海上）" : "登陆 " + (DIRS[int(d.direction)] || int(d.direction))]);
       case "recall": return join(["船 " + int(d.id), "召回"]);
       case "intercept": return join([rate(d.rate), "船 " + int(d.target_id)]);
+      case "reallocate": return join(["船 " + int(d.target_id), "分配比例 " + rate(d.rate)]);
       case "call": return join(["和平投票", "发起"]);
       case "withdraw": return join(["撤销进攻", target(d.target)]);
       case "emoji": return join(["发送表情", emojiOf(d.emoji_id)]);
